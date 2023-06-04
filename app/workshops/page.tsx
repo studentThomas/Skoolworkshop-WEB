@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../globals.css';
 import BreadCrumbs from '../../components/BreadCrumbs';
+import Search from '../../components/Search';
 import Link from "next/link";
 import tracer from 'tracer';
 
@@ -26,8 +27,14 @@ export default async function WorkshopsPage() {
     return (
       <div>
         <BreadCrumbs breadCrumbs={breadCrumbs} />
+     
+     
         <div className="album ">
           <div className="container">
+          <Search />
+        
+         
+     
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
               {workshops?.map((workshop) => {
                 return (
