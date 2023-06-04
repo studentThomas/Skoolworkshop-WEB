@@ -27,7 +27,7 @@ export default async function ProductsPage({params}: any)  {
                 {products?.map((product) => {
                   return (
                     <div className="col" key={product.Id}>
-                      <Product product={product} />
+                      <Product product={product} params={params} />
                     </div>
                   );
                 })}
@@ -41,44 +41,46 @@ export default async function ProductsPage({params}: any)  {
 
 
 
-function Product({ product }: any) {
+function Product({ product, params }: any) {
     const { Id, Name, Quantity } = product;
 
     return (
-        <div className={`card shadow-sm border-3 border-red-500 ${Quantity < 0 ? 'border-danger' : ''}`}>
-          <svg
-            className="bd-placeholder-img card-img-top"
-            width="100%"
-            height="225"
-            xmlns="http://www.w3.org/2000/svg"
-            role="img"
-            aria-label="Placeholder: Thumbnail"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-          >
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#55595c" />
-            <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-              Thumbnail
-            </text>
-          </svg>
-          <div className="card-body">
-            <h5 className="card-title">{Name}</h5>
-            <div className="d-flex justify-content-between align-items-center">
-              <div className="btn-group">
-                <button
-                  type="button"
-                  className="btn btn-sm btn-outline-secondary"
-                >
-                  Delete
-                </button>
-              </div>
-              <h5 className={` ${Quantity < 0 ? 'text-danger' : ''}`}>
-                {Quantity}
-              </h5>
+        <Link href={`/workshops/${params.id}/${Id}`}>
+            <div className={`card shadow-sm border-3 border-red-500 ${Quantity < 0 ? 'border-danger' : ''}`}>
+            <svg
+                className="bd-placeholder-img card-img-top"
+                width="100%"
+                height="225"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                aria-label="Placeholder: Thumbnail"
+                preserveAspectRatio="xMidYMid slice"
+                focusable="false"
+            >
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#55595c" />
+                <text x="50%" y="50%" fill="#eceeef" dy=".3em">
+                Thumbnail
+                </text>
+            </svg>
+            <div className="card-body">
+                <h5 className="card-title">{Name}</h5>
+                <div className="d-flex justify-content-between align-items-center">
+                <div className="btn-group">
+                    <button
+                    type="button"
+                    className="btn btn-sm btn-outline-secondary"
+                    >
+                    Delete
+                    </button>
+                </div>
+                <h5 className={` ${Quantity < 0 ? 'text-danger' : ''}`}>
+                    {Quantity}
+                </h5>
+                </div>
             </div>
-          </div>
-        </div>
+            </div>
+        </Link>
       );
       
       
