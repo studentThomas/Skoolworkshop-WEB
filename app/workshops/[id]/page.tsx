@@ -1,5 +1,6 @@
 
 import Link from "next/link";
+import BreadCrumbs from '../../../components/BreadCrumbs';
 import tracer from 'tracer';
 
 const logger = tracer.colorConsole();
@@ -16,12 +17,20 @@ async function getProducts(workshopId: string) {
 
 }
 
+const breadCrumbs = [
+    { name: "Home", url: "/" },
+    { name: "Workshops", url: "/workshops" },
+    { name: "Products", url: "/workshops/[id]" },
+];
+
+
 export default async function ProductsPage({params}: any)  {
     const products = await getProducts(params.id);
 
     return (
         <div>
-          <div className="album py-5 ">
+        <BreadCrumbs breadCrumbs={breadCrumbs}/>
+          <div className="album ">
             <div className="container">
               <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {products?.map((product) => {

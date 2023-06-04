@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../globals.css';
+import BreadCrumbs from '../../components/BreadCrumbs';
 import Link from "next/link";
 import tracer from 'tracer';
 
@@ -14,21 +15,28 @@ async function getWorkshops() {
     return workshops;
 
 }
+const breadCrumbs = [
+    { name: "Home", url: "/" },
+    { name: "Workshops", url: "/workshops" },
+];
 
 export default async function WorkshopsPage() {
     const workshops = await getWorkshops();
   
     return (
-      <div className="album py-5 ">
-        <div className="container">
-          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {workshops?.map((workshop) => {
-              return (
-                <div className="col" key={workshop.Id}>
-                  <WorkshopCard workshop={workshop} />
-                </div>
-              );
-            })}
+      <div>
+        <BreadCrumbs breadCrumbs={breadCrumbs} />
+        <div className="album ">
+          <div className="container">
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+              {workshops?.map((workshop) => {
+                return (
+                  <div className="col" key={workshop.Id}>
+                    <WorkshopCard workshop={workshop} />
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
