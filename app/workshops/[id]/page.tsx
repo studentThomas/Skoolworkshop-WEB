@@ -21,25 +21,65 @@ export default async function ProductsPage({params}: any)  {
 
     return (
         <div>
-            <h1>Products Page</h1>
-            <div>
+          <div className="album py-5 ">
+            <div className="container">
+              <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {products?.map((product) => {
-                    return <Product key={product.Id} product={product} />;
+                  return (
+                    <div className="col" key={product.Id}>
+                      <Product product={product} />
+                    </div>
+                  );
                 })}
+              </div>
             </div>
+          </div>
         </div>
-    );
+      );
+      
 }
 
 
 
 function Product({ product }: any) {
-    const { Id, Name } = product;
+    const { Id, Name, Quantity } = product;
 
     return (
-        <div>
-            <h2>{Name}</h2>
+        <div className={`card shadow-sm border-3 border-red-500 ${Quantity < 0 ? 'border-danger' : ''}`}>
+          <svg
+            className="bd-placeholder-img card-img-top"
+            width="100%"
+            height="225"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label="Placeholder: Thumbnail"
+            preserveAspectRatio="xMidYMid slice"
+            focusable="false"
+          >
+            <title>Placeholder</title>
+            <rect width="100%" height="100%" fill="#55595c" />
+            <text x="50%" y="50%" fill="#eceeef" dy=".3em">
+              Thumbnail
+            </text>
+          </svg>
+          <div className="card-body">
+            <h5 className="card-title">{Name}</h5>
+            <div className="d-flex justify-content-between align-items-center">
+              <div className="btn-group">
+                <button
+                  type="button"
+                  className="btn btn-sm btn-outline-secondary"
+                >
+                  Delete
+                </button>
+              </div>
+              <h5 className={` ${Quantity < 0 ? 'text-danger' : ''}`}>
+                {Quantity}
+              </h5>
+            </div>
+          </div>
         </div>
-           
-    );
+      );
+      
+      
 }
