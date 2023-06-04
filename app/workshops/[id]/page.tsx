@@ -6,7 +6,8 @@ const logger = tracer.colorConsole();
 
 
 async function getProducts(workshopId: string) {
-    const response = await fetch(`https://skoolworkshop.up.railway.app/api/product?workshopId=${workshopId}`);
+    const response = await fetch(`https://skoolworkshop.up.railway.app/api/product?workshopId=${workshopId}`,
+    {cache: "no-store"});
 
     const data = await response.json();
     const products = data?.data as any[];
@@ -17,7 +18,6 @@ async function getProducts(workshopId: string) {
 
 export default async function ProductsPage({params}: any)  {
     const products = await getProducts(params.id);
-    logger.info(params.id)
 
     return (
         <div>
