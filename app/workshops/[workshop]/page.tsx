@@ -1,6 +1,8 @@
 
 import Link from "next/link";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import BreadCrumbs from '../../../components/BreadCrumbs';
+import Search from '../../../components/Search';
 import tracer from 'tracer';
 
 const logger = tracer.colorConsole();
@@ -17,15 +19,18 @@ async function getProducts(workshopId: string) {
 
 }
 
-const breadCrumbs = [
-    { name: "Home", url: "/" },
-    { name: "Workshops", url: "/workshops" },
-    { name: "Products", url: "/workshops/[id]" },
-];
 
 
 export default async function ProductsPage({params}: any)  {
-    const products = await getProducts(params.id);
+    const products = await getProducts(params.workshop);
+    const breadCrumbs = [
+      { name: "Home", url: "/" },
+      { name: "Workshops", url: "/workshops" },
+      { name: "Workshop", url: `/workshops/${params.workshop}` },
+    ];
+    
+
+  
 
     return (
         <div>
@@ -33,7 +38,8 @@ export default async function ProductsPage({params}: any)  {
     
 
           <div className="album ">
-            <div className="container">
+            <div className="container ">
+              <Search />
               <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {products?.map((product) => {
                   return (
@@ -54,9 +60,11 @@ export default async function ProductsPage({params}: any)  {
 
 function Product({ product, params }: any) {
     const { Id, Name, Quantity } = product;
+    const workshopId = params.workshop;
+
 
     return (
-        <Link href={`/workshops/${params.id}/${Id}`}>
+        <Link href={`/workshops/${workshopId}/${Id}`}>
             <div className={`card shadow-sm border-3 border-red-500 ${Quantity < 0 ? 'border-danger' : ''}`}>
             <svg
                 className="bd-placeholder-img card-img-top"
