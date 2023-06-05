@@ -1,6 +1,8 @@
 
 import Link from "next/link";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import BreadCrumbs from '../../../components/BreadCrumbs';
+import Search from '../../../components/Search';
 import tracer from 'tracer';
 
 const logger = tracer.colorConsole();
@@ -36,7 +38,8 @@ export default async function ProductsPage({params}: any)  {
     
 
           <div className="album ">
-            <div className="container">
+            <div className="container ">
+              <Search />
               <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {products?.map((product) => {
                   return (

@@ -1,6 +1,6 @@
 
 import BreadCrumbs from '../../../../components/BreadCrumbs';
-import { useRouter } from 'next/router';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import tracer from 'tracer';
 
 const logger = tracer.colorConsole();
@@ -28,7 +28,6 @@ export default async function ProductPage({params}: any) {
      
     ];
     const product = await getProduct(params.product);
-    logger.info("Workshop" + params.workshop);
     return (
         <div>
             <BreadCrumbs breadCrumbs={breadCrumbs}/>
