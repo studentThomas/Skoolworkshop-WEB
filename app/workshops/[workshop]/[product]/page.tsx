@@ -41,7 +41,7 @@ export default async function ProductPage({ params }: any) {
         <p>{product.Description}</p>
         <p style={{ color: "gray" }}>Code: {product.Code}</p>
         <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUuBcu-brx5Q2pbCDTBxf2KahL5AjhCnHKgTPX36ZXvkBTWsYBEflCD9xetjG31sSgQS0&usqp=CAU"
+          src={product.Image}
           alt="Product Image"
           style={{
             width: "200px",
