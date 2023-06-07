@@ -47,14 +47,19 @@ export default async function WorkshopsPage() {
   );
 }
 
+const imageStyle = {
+  height: "250px",
+  width: "100%",
+}
+
 function WorkshopCard({ workshop }: any) {
-  const { Id, Name } = workshop;
+  const { Id, Name, Image } = workshop;
 
   return (
     <Link href={`/workshops/${Id}`}>
       <div className="card shadow-sm">
         <img
-          src={workshop.Image}
+          src={Image} className="card-img-top" style={imageStyle}  
           alt="Workshop Image"
         />
         <div className="card-body">
