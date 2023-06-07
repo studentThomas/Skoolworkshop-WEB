@@ -1,6 +1,7 @@
 import BreadCrumbs from "../../../../components/BreadCrumbs";
 import { useRouter } from "next/router";
 import tracer from "tracer";
+import '../../../../css/workshop.css'
 
 const logger = tracer.colorConsole();
 
@@ -29,13 +30,7 @@ export default async function ProductPage({ params }: any) {
       <BreadCrumbs breadCrumbs={breadCrumbs} />
       <h1 style={{ color: "blue" }}>Product</h1>
       <div
-        style={{
-          backgroundColor: "#f9f9f9",
-          padding: "20px",
-          borderRadius: "5px",
-          boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
-        }}
-        className="my-4"
+        className="my-4 div-style"
       >
         <h2>{product.Name}</h2>
         <p>{product.Description}</p>
@@ -43,12 +38,7 @@ export default async function ProductPage({ params }: any) {
         <img
           src={product.Image}
           alt="Product Image"
-          style={{
-            width: "200px",
-            height: "200px",
-            borderRadius: "10%",
-            marginTop: "20px",
-          }}
+          className="product-detailimage"
         />
         <p>Reusable: {product.Reusable ? "Yes" : "No"}</p>
         <p>Quantity: {product.Quantity}</p>

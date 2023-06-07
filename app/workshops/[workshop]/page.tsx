@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import BreadCrumbs from '../../../components/BreadCrumbs';
+import '../../../css/workshop.css'
 // import tracer from 'tracer';
 
 // const logger = tracer.colorConsole();
@@ -45,13 +46,6 @@ function Product({ product, params }: any) {
   const { Id, Name, Quantity, Image } = product;
   const workshopId = params.workshop;
 
-  const imageStyle: React.CSSProperties = {
-    marginTop: '20px',
-    objectFit: 'contain',
-    height: '200px',
-    width: '100%',
-  };
-
   return (
     <Link href={`/workshops/${workshopId}/${Id}`}>
       <div
@@ -61,8 +55,7 @@ function Product({ product, params }: any) {
       >
         <img
           src={Image}
-          className="card-img-top"
-          style={imageStyle}
+          className="card-img-top product-image"
           alt={Name}
         />
         <div className="card-body">

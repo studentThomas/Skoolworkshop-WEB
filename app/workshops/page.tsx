@@ -5,6 +5,7 @@ import "../globals.css";
 import { useState, useEffect } from "react";
 import BreadCrumbs from "../../components/BreadCrumbs";
 import Link from "next/link";
+import '../../css/workshop.css'
 
 async function getWorkshops() {
   const response = await fetch(
@@ -79,11 +80,6 @@ export default function WorkshopsPage() {
   );
 }
 
-const imageStyle = {
-  height: "250px",
-  width: "100%",
-};
-
 function WorkshopCard({ workshop }: { workshop: any }) {
   const { Id, Name, Image } = workshop;
 
@@ -92,8 +88,7 @@ function WorkshopCard({ workshop }: { workshop: any }) {
       <div className="card shadow-sm">
         <img
           src={Image}
-          className="card-img-top"
-          style={imageStyle}
+          className="card-img-top workshop-image"
           alt="Workshop Image"
         />
         <div className="card-body">
