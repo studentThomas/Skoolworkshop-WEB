@@ -1,13 +1,16 @@
-import Link from "next/link";
-import BreadCrumbs from "../../../components/BreadCrumbs";
-import tracer from "tracer";
+'use client';
 
-const logger = tracer.colorConsole();
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import BreadCrumbs from '../../../components/BreadCrumbs';
+// import tracer from 'tracer';
+
+// const logger = tracer.colorConsole();
 
 async function getProducts(workshopId: string) {
   const response = await fetch(
     `https://skoolworkshop.up.railway.app/api/product?workshopId=${workshopId}`,
-    { cache: "no-store" }
+    { cache: 'no-store' }
   );
 
   const data = await response.json();
@@ -16,29 +19,24 @@ async function getProducts(workshopId: string) {
   return products;
 }
 
-export default async function ProductsPage({ params }: any) {
-  const products = await getProducts(params.workshop);
-  const breadCrumbs = [
-    { name: "Home", url: "/" },
-    { name: "Workshops", url: "/workshops" },
-    { name: "Workshop", url: `/workshops/${params.workshop}` },
-  ];
+function Search({ onSearch }: { onSearch: (value: string) => void }) {
+  const [searchValue, setSearchValue] = useState('');
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setSearchValue(value);
+    onSearch(value);
+  };
 
   return (
-    <div>
-      <BreadCrumbs breadCrumbs={breadCrumbs} />
-
-      <div className="album">
-        <div className="container">
-          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {products.map((product) => (
-              <div className="col" key={product.Id}>
-                <Product product={product} params={params} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+    <div className="mb-3">
+      <input
+        type="text"
+        className="form-control"
+        placeholder="Search..."
+        value={searchValue}
+        onChange={handleChange}
+      />
     </div>
   );
 }
@@ -48,17 +46,17 @@ function Product({ product, params }: any) {
   const workshopId = params.workshop;
 
   const imageStyle: React.CSSProperties = {
-    marginTop: "20px",
-    objectFit: "contain",
-    height: "200px",
-    width: "100%",
+    marginTop: '20px',
+    objectFit: 'contain',
+    height: '200px',
+    width: '100%',
   };
 
   return (
     <Link href={`/workshops/${workshopId}/${Id}`}>
       <div
         className={`card shadow-sm border-3 border-red-500 ${
-          Quantity < 0 ? "border-danger" : ""
+          Quantity < 0 ? 'border-danger' : ''
         }`}
       >
         <img
@@ -78,12 +76,59 @@ function Product({ product, params }: any) {
                 Delete
               </button>
             </div>
-            <h5 className={` ${Quantity < 0 ? "text-danger" : ""}`}>
+            <h5 className={` ${Quantity < 0 ? 'text-danger' : ''}`}>
               {Quantity}
             </h5>
           </div>
         </div>
       </div>
     </Link>
+  );
+}
+
+export default function ProductsPage({ params }: any) {
+  const [products, setProducts] = useState<any[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+  const breadCrumbs = [
+    { name: 'Home', url: '/' },
+    { name: 'Workshops', url: '/workshops' },
+    { name: 'Workshop', url: `/workshops/${params.workshop}` },
+  ];
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getProducts(params.workshop);
+      setProducts(data);
+      setFilteredProducts(data);
+    }
+
+    fetchData();
+  }, [params.workshop]);
+
+  const handleSearch = (value: string) => {
+    const filtered = products.filter((product) =>
+      product.Name.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  };
+
+  return (
+    <div>
+      <BreadCrumbs breadCrumbs={breadCrumbs} />
+
+      <div className="album">
+        <div className="container">
+          <Search onSearch={handleSearch} />
+
+          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {filteredProducts.map((product) => (
+              <div className="col" key={product.Id}>
+                <Product product={product} params={params} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

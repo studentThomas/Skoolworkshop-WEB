@@ -1,11 +1,10 @@
+'use client';
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../globals.css";
+import { useState, useEffect } from "react";
 import BreadCrumbs from "../../components/BreadCrumbs";
-import Search from "../../components/Search";
 import Link from "next/link";
-import tracer from "tracer";
-
-const logger = tracer.colorConsole();
 
 async function getWorkshops() {
   const response = await fetch(
@@ -16,30 +15,63 @@ async function getWorkshops() {
   const workshops = data?.data as any[];
   return workshops;
 }
+
 const breadCrumbs = [
   { name: "Home", url: "/" },
   { name: "Workshops", url: "/workshops" },
 ];
 
-export default async function WorkshopsPage() {
-  const workshops = await getWorkshops();
+export default function WorkshopsPage() {
+  const [workshops, setWorkshops] = useState<any[]>([]);
+  const [filteredWorkshops, setFilteredWorkshops] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchWorkshops();
+  }, []);
+
+  const fetchWorkshops = async () => {
+    const workshops = await getWorkshops();
+    setWorkshops(workshops);
+    setFilteredWorkshops(workshops);
+  };
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const searchTerm = event.target.value;
+    if (!searchTerm) {
+      setFilteredWorkshops(workshops);
+      return;
+    }
+
+    const filteredWorkshops = workshops.filter((workshop) =>
+      workshop.Name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredWorkshops(filteredWorkshops);
+  };
 
   return (
     <div>
       <BreadCrumbs breadCrumbs={breadCrumbs} />
 
-      <div className="album ">
+      <div className="album">
         <div className="container">
-          <Search />
+          <header className="mb-4">
+            <form>
+              <input
+                type="search"
+                className="form-control"
+                placeholder="Search..."
+                aria-label="Search"
+                onChange={handleSearch}
+              />
+            </form>
+          </header>
 
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {workshops?.map((workshop) => {
-              return (
-                <div className="col" key={workshop.Id}>
-                  <WorkshopCard workshop={workshop} />
-                </div>
-              );
-            })}
+            {filteredWorkshops.map((workshop) => (
+              <div className="col" key={workshop.Id}>
+                <WorkshopCard workshop={workshop} />
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -50,16 +82,18 @@ export default async function WorkshopsPage() {
 const imageStyle = {
   height: "250px",
   width: "100%",
-}
+};
 
-function WorkshopCard({ workshop }: any) {
+function WorkshopCard({ workshop }: { workshop: any }) {
   const { Id, Name, Image } = workshop;
 
   return (
     <Link href={`/workshops/${Id}`}>
       <div className="card shadow-sm">
         <img
-          src={Image} className="card-img-top" style={imageStyle}  
+          src={Image}
+          className="card-img-top"
+          style={imageStyle}
           alt="Workshop Image"
         />
         <div className="card-body">
@@ -68,7 +102,7 @@ function WorkshopCard({ workshop }: any) {
             <div className="btn-group">
               <button
                 type="button"
-                className="btn btn-sm btn-outline-secondary "
+                className="btn btn-sm btn-outline-secondary"
               >
                 Delete
               </button>
