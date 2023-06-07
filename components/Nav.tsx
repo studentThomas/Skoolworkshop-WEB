@@ -38,7 +38,7 @@ export default function Nav() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="nav-link text-white">
+                  <a href="/scanner" className="nav-link text-white">
                     <svg className="bi d-block mx-auto mb-1" width="24" height="24">
                       <use xlinkHref="#people-circle"/>
                     </svg>

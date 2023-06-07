@@ -1,6 +1,9 @@
 import Link from "next/link";
-import BreadCrumbs from "../../../components/BreadCrumbs";
-import tracer from "tracer";
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import BreadCrumbs from '../../../components/BreadCrumbs';
+import Search from '../../../components/Search';
+import tracer from 'tracer';
 
 const logger = tracer.colorConsole();
 

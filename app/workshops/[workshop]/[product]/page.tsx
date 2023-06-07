@@ -1,6 +1,7 @@
+
 import BreadCrumbs from "../../../../components/BreadCrumbs";
 import { useRouter } from "next/router";
-import tracer from "tracer";
+import tracer from "tracer";  
 
 const logger = tracer.colorConsole();
 
@@ -15,6 +16,7 @@ async function getProduct(productId: string) {
 
   return product;
 }
+
 export default async function ProductPage({ params }: any) {
   const breadCrumbs = [
     { name: "Home", url: "/" },
