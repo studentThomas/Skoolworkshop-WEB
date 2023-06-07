@@ -54,7 +54,7 @@ function WorkshopCard({ workshop }: any) {
     <Link href={`/workshops/${Id}`}>
       <div className="card shadow-sm">
         <img
-          src="https://cdn-bnege.nitrocdn.com/MVgfApSlnIZMEMtTrPfeVWWDRvGvEHus/assets/images/optimized/rev-aeea760/wp-content/uploads/2021/04/Skool-Workshop-Workshop-Graffiti-1024x683.jpg"
+          src={workshop.Image}
           alt="Workshop Image"
         />
         <div className="card-body">
