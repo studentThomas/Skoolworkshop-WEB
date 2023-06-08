@@ -18,7 +18,7 @@ export default function Nav() {
                   <svg className="bi d-block mx-auto mb-1" width="24" height="24">
                       <use xlinkHref="#table"/>
                     </svg>
-                    Dashboard
+                    Home
                   </a>
                 </li>
                 <li>
@@ -34,15 +34,31 @@ export default function Nav() {
                     <svg className="bi d-block mx-auto mb-1" width="24" height="24">
                       <use xlinkHref="#grid"/>
                     </svg>
-                    Orders
+                    Bestellingen
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="nav-link text-white">
+                  <a href="/scanner" className="nav-link text-white">
                     <svg className="bi d-block mx-auto mb-1" width="24" height="24">
-                      <use xlinkHref="#people-circle"/>
+                      <use xlinkHref="#table"/>
                     </svg>
                     Scanner
+                  </a>
+                </li>
+                <li>
+                  <a href="/productToevoegen" className="nav-link text-white">
+                    <svg className="bi d-block mx-auto mb-1" width="24" height="24">
+                      <use xlinkHref="#table"/>
+                    </svg>
+                    Product Toevoegen
+                  </a>
+                </li>
+                <li>
+                  <a href="/help" className="nav-link text-white">
+                    <svg className="bi d-block mx-auto mb-1" width="24" height="24">
+                      <use xlinkHref="#table"/>
+                    </svg>
+                    Help
                   </a>
                 </li>
               </ul>
