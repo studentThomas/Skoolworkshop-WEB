@@ -1,5 +1,5 @@
 'use client';
-import tracer from "tracer";
+
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import BreadCrumbs from '../../../components/BreadCrumbs';
