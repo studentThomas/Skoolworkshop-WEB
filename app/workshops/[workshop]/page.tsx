@@ -4,9 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import BreadCrumbs from '../../../components/BreadCrumbs';
 import '../../../css/workshop.css'
-// import tracer from 'tracer';
-
-// const logger = tracer.colorConsole();
 
 async function getProducts(workshopId: string) {
   const response = await fetch(
