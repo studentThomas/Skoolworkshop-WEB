@@ -71,14 +71,14 @@ export default function Nav() {
                 </a>
               </li>
               <li>
-                <a href="/productToevoegen" className="nav-link text-white">
+                <a href="/productToevoegenVerwijderen" className="nav-link text-white">
                   <svg
                   className="bi d-block mx-auto mb-1"
                   width="24"
                   height="24">
                     <use xlinkHref="#people-circle" />
                   </svg>
-                  Product Toevoegen
+                  Product Toevoegen/Verwijderen
                 </a>
               </li>
             </ul>
