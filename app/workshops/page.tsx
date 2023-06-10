@@ -88,7 +88,7 @@ function WorkshopCard({ workshop }: { workshop: any }) {
       <div className="card shadow-sm">
         <img
           src={Image}
-          className="card-img-top workshop-image"
+          className="card-img-top workshop-image img-fluid"
           alt="Workshop Image"
         />
         <div className="card-body">

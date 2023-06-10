@@ -41,7 +41,7 @@ export default function updateProduct({ params }: any) {
     async function fetchData() {
       const fetchedProduct = await getProduct(params.product);
       setProduct(fetchedProduct);
-      setQuantity(fetchedProduct.Quantity);
+      setQuantity(0);
     }
 
     fetchData();
@@ -95,16 +95,16 @@ export default function updateProduct({ params }: any) {
           <div className="input-container">
             <input
               type="range"
-              min="-100"
-              max="100"
+              min="-50"
+              max="50"
               value={quantity}
               onChange={handleQuantityChange}
             />
             <div className="input-space" />
             <input
               type="number"
-              min="-100"
-              max="100"
+              min="-50"
+              max="50"
               value={quantity}
               onChange={handleQuantityChange}
             />
