@@ -7,8 +7,7 @@ import '../../../css/workshop.css'
 
 async function getProducts(workshopId: string) {
   const response = await fetch(
-    `https://skoolworkshop.up.railway.app/api/product?workshopId=${workshopId}`,
-    { cache: 'no-store' }
+    `https://skoolworkshop.up.railway.app/api/product?workshopId=${workshopId}`
   );
 
   const data = await response.json();
