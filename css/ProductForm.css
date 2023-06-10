@@ -1,10 +1,13 @@
 .product-form-container {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
   }
   
   .product-form-container > div {
     margin: 0 20px;
+    flex-basis: 100%;
+    max-width: 400px;
   }
   
   .product-form-container h2 {
@@ -25,7 +28,8 @@
   }
   
   .product-form-container input,
-  .product-form-container textarea {
+  .product-form-container textarea,
+  .product-form-container select {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -48,4 +52,3 @@
     text-align: center;
     margin-top: 10px;
   }
-  
