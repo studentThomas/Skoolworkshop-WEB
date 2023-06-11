@@ -1,4 +1,21 @@
-export default function Modal({ isVisible, onClose, name }: any) {
+import { useRouter } from "next/navigation";
+
+export default function Modal({ isVisible, onClose, name, productId }: any) {
+  const router = useRouter();
+
+  const deleteProduct = async(productId: string) => {
+    await fetch(`https://skoolworkshop.up.railway.app/api/product/${productId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+
+
+    onClose();
+    router.refresh();
+  }
+
   if (!isVisible) return null;
 
   return (
@@ -19,14 +36,18 @@ export default function Modal({ isVisible, onClose, name }: any) {
             <p>Weet je zeker dat je dit item wilt verwijderen? Het is niet meer terug te halen.</p>
           </div>
           <div className="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
-            <button type="button" className="btn btn-lg btn-danger">
+            <button
+              type="button"
+              className="btn btn-lg btn-danger"
+              onClick={() => deleteProduct(productId)}
+            >
               Verwijderen
             </button>
             <button
               type="button"
               className="btn btn-lg btn-secondary"
               data-bs-dismiss="modal"
-              onClick={() => onClose()}
+              onClick={onClose}
             >
               Sluiten
             </button>

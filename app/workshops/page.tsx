@@ -91,7 +91,7 @@ function WorkshopCard({ workshop }: { workshop: any }) {
   
   return (
     <div>
-      <Modal isVisible={showModal} onClose={() => setShowModal(false)} name={Name} />
+      <Modal isVisible={showModal} onClose={() => setShowModal(false)} name={Name}  />
       <div className="card shadow-sm">
         <Link href={`/workshops/${Id}`}>
           <img

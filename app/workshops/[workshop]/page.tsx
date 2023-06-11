@@ -8,7 +8,8 @@ import '../../../css/workshop.css'
 
 async function getProducts(workshopId: string) {
   const response = await fetch(
-    `https://skoolworkshop.up.railway.app/api/product?workshopId=${workshopId}`
+    `https://skoolworkshop.up.railway.app/api/product?workshopId=${workshopId}`,
+    { cache: "no-store" }
   );
 
   const data = await response.json();
@@ -39,7 +40,7 @@ function Search({ onSearch }: { onSearch: (value: string) => void }) {
   );
 }
 
-export default function ProductsPage({ params }: any) {
+export default  function ProductsPage({ params }: any) {
   const [products, setProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const breadCrumbs = [
@@ -93,7 +94,7 @@ function Product({ product, params }: any) {
 
   return (
     <div>
-      <Modal isVisible={showModal} onClose={() => setShowModal(false)} name={Name} />
+      <Modal isVisible={showModal} onClose={() => setShowModal(false)} name={Name} productId={Id} />
       <div className={`card shadow-sm border-3 border-red-500 ${Quantity < 0 ? 'border-danger' : ''}`}>
         <Link href={`/workshops/${workshopId}/${Id}`}>
           <img
