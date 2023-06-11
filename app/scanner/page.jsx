@@ -1,10 +1,12 @@
 "use client"
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,  } from 'react';
+import { useRouter } from "next/navigation";
 import { Html5QrcodeScanner } from 'html5-qrcode';
 
 function Scanner() {
   const [scanResult, setScanResult] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const scanner = new Html5QrcodeScanner('reader', {
@@ -19,6 +21,7 @@ function Scanner() {
 
     function succes(result) {
       scanner.clear();
+      router.push('/scanner/' + result);
       setScanResult(result);
     }
 
