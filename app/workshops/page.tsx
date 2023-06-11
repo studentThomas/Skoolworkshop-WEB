@@ -88,19 +88,16 @@ export default function WorkshopsPage() {
 function WorkshopCard({ workshop }: { workshop: any }) {
   const { Id, Name, Image } = workshop;
   const [showModal, setShowModal] = useState(false);
-
-
-  if(showModal) return (
-    <Modal isVisible={setShowModal} onClose={() => setShowModal(false)} />
-    );
-
+  
   return (
+    <div>
+      <Modal isVisible={showModal} onClose={() => setShowModal(false)} name={Name} />
       <div className="card shadow-sm">
         <Link href={`/workshops/${Id}`}>
           <img
             src={Image}
             className="card-img-top workshop-image"
-            alt="Workshop Image"
+            alt={Name}
           />
         </Link>
         <div className="card-body">
@@ -117,9 +114,9 @@ function WorkshopCard({ workshop }: { workshop: any }) {
             </div>
           </div>
         </div>
-     
       </div>
-    
+    </div>
   );
+  
 }
 
