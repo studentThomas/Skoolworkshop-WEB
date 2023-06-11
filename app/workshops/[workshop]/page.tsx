@@ -40,7 +40,45 @@ function Search({ onSearch }: { onSearch: (value: string) => void }) {
   );
 }
 
-export default  function ProductsPage({ params }: any) {
+function Product({ product, params }: any) {
+  const { Id, Name, Quantity, Image } = product;
+  const workshopId = params.workshop;
+
+  return (
+    <Link href={`/workshops/${workshopId}/${Id}`}>
+      <div
+        className={`card shadow-sm border-3 border-red-500 ${
+          Quantity <= 0 ? 'border-danger' : ''
+        }`}
+      >
+        <img
+          src={Image}
+          className="card-img-top product-image"
+          alt={Name}
+        />
+        <div className="card-body">
+          <h5 className="card-title">{Name}</h5>
+          <div className="d-flex justify-content-between align-items-center">
+            <div className="btn-group">
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-secondary"
+              >
+                Delete
+              </button>
+            </div>
+            <h5 className={` ${Quantity <= 0 ? 'text-danger' : ''}`}>
+              {Quantity}
+            </h5>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+export default function ProductsPage({ params }: any) {
+
   const [products, setProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const breadCrumbs = [
@@ -85,43 +123,4 @@ export default  function ProductsPage({ params }: any) {
       </div>
     </div>
   );
-}
-
-function Product({ product, params }: any) {
-  const { Id, Name, Quantity, Image } = product;
-  const workshopId = params.workshop;
-  const [showModal, setShowModal] = useState(false);
-
-  return (
-    <div>
-      <Modal isVisible={showModal} onClose={() => setShowModal(false)} name={Name} productId={Id} />
-      <div className={`card shadow-sm border-3 border-red-500 ${Quantity < 0 ? 'border-danger' : ''}`}>
-        <Link href={`/workshops/${workshopId}/${Id}`}>
-          <img
-            src={Image}
-            className="card-img-top product-image"
-            alt={Name}
-          />
-        </Link>
-        <div className="card-body">
-          <h5 className="card-title">{Name}</h5>
-          <div className="d-flex justify-content-between align-items-center">
-            <div className="btn-group">
-              <button
-                type="button"
-                className="btn btn-sm btn-outline-secondary"
-                onClick={() => setShowModal(true)}
-              >
-                Delete
-              </button>
-            </div>
-            <h5 className={`${Quantity < 0 ? 'text-danger' : ''}`}>
-              {Quantity}
-            </h5>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-  
 }
