@@ -3,12 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import BreadCrumbs from '../../../components/BreadCrumbs';
+import Modal from "../../../components/Modal";
 import '../../../css/workshop.css'
 
 async function getProducts(workshopId: string) {
   const response = await fetch(
     `https://skoolworkshop.up.railway.app/api/product?workshopId=${workshopId}`,
-    { cache: 'no-store' }
+    { cache: "no-store" }
   );
 
   const data = await response.json();
@@ -77,6 +78,7 @@ function Product({ product, params }: any) {
 }
 
 export default function ProductsPage({ params }: any) {
+
   const [products, setProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const breadCrumbs = [
