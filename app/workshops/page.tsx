@@ -1,11 +1,13 @@
 'use client';
 
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../globals.css";
 import { useState, useEffect } from "react";
 import BreadCrumbs from "../../components/BreadCrumbs";
 import Link from "next/link";
 import '../../css/workshop.css'
+import Modal from "../../components/Modal";
 
 async function getWorkshops() {
   const response = await fetch(
@@ -25,6 +27,7 @@ const breadCrumbs = [
 export default function WorkshopsPage() {
   const [workshops, setWorkshops] = useState<any[]>([]);
   const [filteredWorkshops, setFilteredWorkshops] = useState<any[]>([]);
+
 
   useEffect(() => {
     fetchWorkshops();
@@ -49,10 +52,10 @@ export default function WorkshopsPage() {
     setFilteredWorkshops(filteredWorkshops);
   };
 
+
   return (
     <div>
       <BreadCrumbs breadCrumbs={breadCrumbs} />
-
       <div className="album">
         <div className="container">
           <header className="mb-4">
@@ -74,23 +77,32 @@ export default function WorkshopsPage() {
               </div>
             ))}
           </div>
+
         </div>
       </div>
+
     </div>
+    
   );
 }
-
 function WorkshopCard({ workshop }: { workshop: any }) {
   const { Id, Name, Image } = workshop;
+  const [showModal, setShowModal] = useState(false);
+
+
+  if(showModal) return (
+    <Modal isVisible={setShowModal} onClose={() => setShowModal(false)} />
+    );
 
   return (
-    <Link href={`/workshops/${Id}`}>
       <div className="card shadow-sm">
-        <img
-          src={Image}
-          className="card-img-top workshop-image"
-          alt="Workshop Image"
-        />
+        <Link href={`/workshops/${Id}`}>
+          <img
+            src={Image}
+            className="card-img-top workshop-image"
+            alt="Workshop Image"
+          />
+        </Link>
         <div className="card-body">
           <h5 className="card-title">{Name}</h5>
           <div className="d-flex justify-content-between align-items-center">
@@ -98,13 +110,16 @@ function WorkshopCard({ workshop }: { workshop: any }) {
               <button
                 type="button"
                 className="btn btn-sm btn-outline-secondary"
+                onClick={() => setShowModal(true)}
               >
                 Delete
               </button>
             </div>
           </div>
         </div>
+     
       </div>
-    </Link>
+    
   );
 }
+
