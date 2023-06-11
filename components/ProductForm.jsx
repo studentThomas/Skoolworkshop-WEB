@@ -38,6 +38,17 @@ function ProductForm({ onProductCreated }) {
   const handleAddProduct = async (event) => {
     event.preventDefault();
 
+    // Validate Workshop ID
+    const workshopIdNumber = parseInt(workshopId, 10);
+    if (
+      isNaN(workshopIdNumber) ||
+      workshopIdNumber < 1 ||
+      workshopIdNumber > 31
+    ) {
+      setAddMessage("Workshop ID moet een nummer tussen 1 en 31 zijn");
+      return;
+    }
+
     const reusableValue = reusable === "Yes" ? 1 : 0;
 
     try {
