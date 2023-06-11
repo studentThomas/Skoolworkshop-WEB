@@ -22,10 +22,14 @@
   
   .product-form-container label {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     margin-bottom: 10px;
   }
+  
+  .product-form-container input[type="checkbox"] {
+    margin-right: 6px;
+    transform: translateY(5px);
+  }  
   
   .product-form-container input,
   .product-form-container textarea,

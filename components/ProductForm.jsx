@@ -173,16 +173,18 @@ function ProductForm({ onProductCreated }) {
                 className="px-2 py-1 border rounded"
               />
             </label>
-            <div className="flex items-center mb-4">
-              <label htmlFor="checkbox">Herbruikbaar:</label>
-              <input
-                type="checkbox"
-                checked={reusable}
-                id="checkbox"
-                onChange={(event) => setReusable(event.target.checked)}
-                className=""
-              />
-            </div>
+            <form>
+              <label className="flex flex-col mb-4">
+                Herbruikbaar:
+                <input
+                  type="checkbox"
+                  checked={reusable}
+                  id="checkbox"
+                  onChange={(event) => setReusable(event.target.checked)}
+                />
+              </label>
+            </form>
+
             <button
               type="submit"
               className="bg-blue-500 text-white py-1 px-4 rounded"
