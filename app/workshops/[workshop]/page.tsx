@@ -94,7 +94,7 @@ function Product({ product, params }: any) {
   return (
     <div>
       <Modal isVisible={showModal} onClose={() => setShowModal(false)} name={Name} productId={Id} />
-      <div className={`card shadow-sm border-3 border-red-500 ${Quantity < 0 ? 'border-danger' : ''}`}>
+      <div className={`card shadow-sm border-3 border-red-500 ${Quantity <= 0 ? 'border-danger' : ''}`}>
         <Link href={`/workshops/${workshopId}/${Id}`}>
           <img
             src={Image}
@@ -114,7 +114,7 @@ function Product({ product, params }: any) {
                 Delete
               </button>
             </div>
-            <h5 className={`${Quantity < 0 ? 'text-danger' : ''}`}>
+            <h5 className={`${Quantity <= 0 ? 'text-danger' : ''}`}>
               {Quantity}
             </h5>
           </div>
