@@ -24,7 +24,7 @@ const breadCrumbs = [
   { name: "Workshops", url: "/workshops" },
 ];
 
-export default function WorkshopsPage() {
+export default  function WorkshopsPage() {
   const [workshops, setWorkshops] = useState<any[]>([]);
   const [filteredWorkshops, setFilteredWorkshops] = useState<any[]>([]);
 
