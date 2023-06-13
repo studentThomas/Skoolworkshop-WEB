@@ -47,7 +47,7 @@ export default function Nav() {
                 </a>
               </li>
               <li>
-                <a href="#" className="nav-link text-white">
+                <a href="/orders" className="nav-link text-white">
                   <svg
                     className="bi d-block mx-auto mb-1"
                     width="24"
