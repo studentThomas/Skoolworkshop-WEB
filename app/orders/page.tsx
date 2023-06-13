@@ -10,7 +10,6 @@ async function getOrders() {
     const response = await fetch("http://127.0.0.1:3000/api/order");
     const data = await response.json();
     const orders = data?.data as any[];
-    logger.warn(orders);
     return orders;
 }
 
@@ -28,15 +27,50 @@ async function getWorkshop(workshopId : string) {
     return workshop;
 }
 
+export async function updateQuantity(productId: string, quantity: number) {
+  await fetch(`http://127.0.0.1:3000/api/stock/${productId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      quantity: quantity
+    }),
+  });
+}
+
+export async function updateStatus(orderWorkshopId: string) {
+  await fetch(`http://127.0.0.1:3000/api/order/${orderWorkshopId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+}
+
+
+
 
 
 
 export default async function OrdersPage() {
     const orders = await getOrders();
 
+      for (const order of orders) {
+        if(order.Status == "0"){
+          for (const product of order.products) {
+            const productId = product.ProductId;
+            const quantity = product.Quantity;
+            await updateStatus(order.OrderWorkshopId);
+            await updateQuantity(productId, quantity);
+        
+          }
+        }
+      }
+    
 
     return (
-      <div className="album py-5 ">
+      <div className="album p-3 ">
         <div className="container">
           <div className="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-3">
             {orders.map((order) => (
@@ -57,28 +91,30 @@ export default async function OrdersPage() {
 
 
     return (
-            <div className="card shadow-sm">
-              <div className="card-body">
-                <Link href={`/workshops/${workshopId}`}>
-                <button type="button" className="btn btn-warning w-100 mb-2">
-                  {workshop.Name}
-                </button>
-                </Link>
+      <div className="card shadow-sm p-2">
+        <div className="card-body">
+          <Link href={`/workshops/${workshopId}`}>
+            <button type="button" className="btn btn-secondary w-100 mb-2">
+              {workshop.Name}
+            </button>
+          </Link>
     
-                <div className="d-flex flex-column flex-md-row align-items-center justify-content-center">
-                  <div className="list-group w-100">
-                    {Products.map((product: any) => (
-                      <ProductItem key={product.ProductId} product={product} workshopId={workshopId} />
-                    ))}
-                  </div>
-                </div>
-              </div>
+          <div className="d-flex flex-column flex-md-row">
+            <div className="list-group w-100">
+              {Products.map((product: any) => (
+                <ProductItem key={product.ProductId} product={product} workshopId={workshopId} />
+              ))}
             </div>
+            
+          </div>
 
-      );
-      
-
+        </div>
+  
+      </div>
+    );
+    
 }
+
 async function ProductItem({ product, workshopId }: { product: any, workshopId: any }) {
         const product2 = await getProduct(product.ProductId);
     
@@ -98,7 +134,6 @@ async function ProductItem({ product, workshopId }: { product: any, workshopId: 
             </Link>
 
             );
-            
     }
   
   
