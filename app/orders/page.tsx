@@ -7,7 +7,8 @@ import "../globals.css";
 const logger = tracer.colorConsole();
 
 async function getOrders() {
-    const response = await fetch("http://127.0.0.1:3000/api/order");
+    const response = await fetch("http://127.0.0.1:3000/api/order",
+    { cache: "no-store" });
     const data = await response.json();
     const orders = data?.data as any[];
     return orders;
@@ -34,7 +35,7 @@ export async function updateQuantity(productId: string, quantity: number) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      quantity: quantity
+      quantity: -quantity
     }),
   });
 }
