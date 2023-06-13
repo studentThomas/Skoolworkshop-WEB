@@ -1,5 +1,8 @@
 import { log } from 'console';
+import Link from 'next/link';
 import tracer from 'tracer';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../globals.css";
 
 const logger = tracer.colorConsole();
 
@@ -30,8 +33,6 @@ async function getWorkshop(workshopId : string) {
 
 export default async function OrdersPage() {
     const orders = await getOrders();
-    const workshop = await getWorkshop("2");
-    logger.warn(workshop);
 
 
     return (
@@ -56,33 +57,33 @@ export default async function OrdersPage() {
 
 
     return (
-        <div className="col">
-        <div className="card shadow-sm">
-            <div className="card-body">
-            <button type="button" className="btn btn-warning w-100 mb-2 ">
-               {workshop.Name}
-            </button>
-            <div className="d-flex flex-column flex-md-row align-items-center justify-content-center">
-                <div className="list-group w-100">
+            <div className="card shadow-sm">
+              <div className="card-body">
+                <Link href={`/workshops/${workshopId}`}>
+                <button type="button" className="btn btn-warning w-100 mb-2">
+                  {workshop.Name}
+                </button>
+                </Link>
+    
+                <div className="d-flex flex-column flex-md-row align-items-center justify-content-center">
+                  <div className="list-group w-100">
                     {Products.map((product: any) => (
-                        <ProductItem key={product.ProductId} product={product}  />
+                      <ProductItem key={product.ProductId} product={product} workshopId={workshopId} />
                     ))}
+                  </div>
                 </div>
+              </div>
             </div>
-            </div>
-        </div>
-        </div>
-    );
+
+      );
+      
 
 }
-
-async function ProductItem({ product }: { product: any}) {
+async function ProductItem({ product, workshopId }: { product: any, workshopId: any }) {
         const product2 = await getProduct(product.ProductId);
-       
-
-        // logger.log(workshop);
-
+    
         return (
+            <Link href={`/workshops/${workshopId}/${product2.Id}`}>
             <div className="list-group-item list-group-item-action d-flex gap-3 py-3">
                 <div className="d-flex w-100 justify-content-between">
                     <div>
@@ -94,6 +95,8 @@ async function ProductItem({ product }: { product: any}) {
                     <small className="text-nowrap text-danger">-{product.Quantity}</small>
                 </div>
              </div>
+            </Link>
+
             );
             
     }
