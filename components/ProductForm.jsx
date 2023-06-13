@@ -12,8 +12,10 @@ function ProductForm({ onProductCreated }) {
   const [workshopId, setWorkshopId] = useState("");
   const [participantMultiplier, setParticipantMultiplier] = useState("");
   const [reusable, setReusable] = useState(false);
+  const [categoryId, setCategoryId] = useState("");
   const [addMessage, setAddMessage] = useState("");
   const [workshops, setWorkshops] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     // Fetch the workshops data from the API
@@ -32,6 +34,26 @@ function ProductForm({ onProductCreated }) {
       .catch((error) => {
         console.error("Error fetching workshops:", error);
         setAddMessage("Er is iets misgegaan met het ophalen van de workshops");
+      });
+
+    // Fetch the categories data from the API
+    fetch("https://skoolworkshop.up.railway.app/api/categories")
+      .then((response) => response.json())
+      .then((data) => {
+        if (Array.isArray(data.data)) {
+          setCategories(data.data);
+        } else {
+          console.error("Categories data is not an array:", data);
+          setAddMessage(
+            "Er is iets misgegaan met het ophalen van de categorieën"
+          );
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
+        setAddMessage(
+          "Er is iets misgegaan met het ophalen van de categorieën"
+        );
       });
   }, []);
 
@@ -68,6 +90,7 @@ function ProductForm({ onProductCreated }) {
             workshopId: workshopIdNumber,
             participantMultiplier,
             reusable: reusableValue,
+            categoryId,
           }),
         }
       );
@@ -83,7 +106,8 @@ function ProductForm({ onProductCreated }) {
         setQuantity("");
         setWorkshopId("");
         setParticipantMultiplier("");
-        setReusable(false); // Reset "reusable" field
+        setReusable(false);
+        setCategoryId("");
         // Trigger callback function
         onProductCreated();
       } else {
@@ -166,7 +190,7 @@ function ProductForm({ onProductCreated }) {
                 <option value="">Selecteer een workshop</option>
                 {workshops.map((workshop) => (
                   <option key={workshop.Id} value={workshop.Id}>
-                    {workshop.Id} - {workshop.Name}
+                    {workshop.Name}
                   </option>
                 ))}
               </select>
@@ -184,15 +208,31 @@ function ProductForm({ onProductCreated }) {
                 className="px-2 py-1 border rounded"
               />
             </label>
-              <label className="flex flex-col mb-4">
-                Herbruikbaar:
-                <input
-                  type="checkbox"
-                  checked={reusable}
-                  id="checkbox"
-                  onChange={(event) => setReusable(event.target.checked)}
-                />
-              </label>
+            <label className="flex flex-col mb-4">
+              Herbruikbaar:
+              <input
+                type="checkbox"
+                checked={reusable}
+                id="checkbox"
+                onChange={(event) => setReusable(event.target.checked)}
+              />
+            </label>
+            <label className="flex flex-col mb-4">
+              Categorie:
+              <select
+                value={categoryId}
+                onChange={(event) => setCategoryId(event.target.value)}
+                required
+                className="px-2 py-1 border rounded"
+              >
+                <option value="">Selecteer een categorie</option>
+                {categories.map((category) => (
+                  <option key={category.Id} value={category.Id}>
+                    {category.Id} - {category.Name}
+                  </option>
+                ))}
+              </select>
+            </label>
             <button
               type="submit"
               className="bg-blue-500 text-white py-1 px-4 rounded"
