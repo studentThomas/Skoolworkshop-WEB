@@ -54,9 +54,9 @@ export default  function WorkshopsPage() {
 
 
   return (
-    <div>
+    <div className="">
       <BreadCrumbs breadCrumbs={breadCrumbs} />
-      <div className="album">
+      <div className="album ">
         <div className="container">
           <header className="mb-4">
             <form>
