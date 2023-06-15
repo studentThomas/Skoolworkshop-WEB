@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import BreadCrumbs from "../../components/BreadCrumbs";
+import Nav from "@/components/Nav";
 import Link from "next/link";
 import "../../css/workshop.css";
 
@@ -14,6 +15,9 @@ async function getWorkshops() {
   return workshops;
 }
 
+
+
+
 const breadCrumbs = [
   { name: "Home", url: "/" },
   { name: "Workshops", url: "/workshops" },
@@ -22,6 +26,11 @@ const breadCrumbs = [
 export default  function WorkshopsPage() {
   const [workshops, setWorkshops] = useState<any[]>([]);
   const [filteredWorkshops, setFilteredWorkshops] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Set the item in localStorage
+    localStorage.setItem('role', 'admin');
+  }, []);
 
   useEffect(() => {
     fetchWorkshops();
@@ -48,6 +57,7 @@ export default  function WorkshopsPage() {
 
   return (
     <div>
+      <Nav />
       <BreadCrumbs breadCrumbs={breadCrumbs} />
       <div className="album">
         <div className="container">

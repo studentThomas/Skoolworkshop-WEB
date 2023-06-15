@@ -3,6 +3,7 @@ import Link from 'next/link';
 import tracer from 'tracer';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../globals.css";
+import Nav from '@/components/Nav';
 
 const logger = tracer.colorConsole();
 
@@ -71,7 +72,9 @@ export default async function OrdersPage() {
     
 
     return (
+
       <div className="album p-3 ">
+              <Nav/>
         <div className="container">
           <div className="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-3">
             {orders.map((order) => (

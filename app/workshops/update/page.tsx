@@ -83,6 +83,7 @@ export default function UpdateWorkshopPage() {
 
   return (
     <div className="workshop-form-container">
+            <Nav />
       <div>
       <Modal isVisible={showModal} onClose={() => setShowModal(false)} name={name} workshopId={workshop} />
         <h2 className="text-center text-2xl font-bold mb-4">
