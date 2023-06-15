@@ -27,12 +27,14 @@ export default  function WorkshopsPage() {
   const [workshops, setWorkshops] = useState<any[]>([]);
   const [filteredWorkshops, setFilteredWorkshops] = useState<any[]>([]);
 
-  useEffect(() => {
-    // Set the item in localStorage
-    localStorage.setItem('role', 'admin');
-  }, []);
+
+
+  localStorage.setItem('role', 'admin');
+  const role = localStorage.getItem('role');
+
 
   useEffect(() => {
+
     fetchWorkshops();
   }, []);
 
@@ -58,6 +60,7 @@ export default  function WorkshopsPage() {
   return (
     <div>
       <Nav />
+      <h1 className="text-center">{role}</h1>
       <BreadCrumbs breadCrumbs={breadCrumbs} />
       <div className="album">
         <div className="container">

@@ -49,6 +49,8 @@ export default  function ProductsPage({ params }: any) {
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
 
 
+  localStorage.setItem('role', 'admin');
+  const role = localStorage.getItem('role');
 
   const breadCrumbs = [
     { name: 'Home', url: '/' },
@@ -80,6 +82,7 @@ export default  function ProductsPage({ params }: any) {
   return (
     <div>
         <Nav />
+        <h1>{role}</h1>
       <BreadCrumbs breadCrumbs={breadCrumbs} />
 
       <div className="album">

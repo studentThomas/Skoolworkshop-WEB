@@ -1,4 +1,4 @@
-import "../../css/Forbidden.css"
+import "../../css/Forbidden.css";
 
 export default function Forbidden() {
     return (

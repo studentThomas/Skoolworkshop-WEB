@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Modal from "../../../components/ModalWorkshop";
+import Nav from "@/components/Nav";
 import "../../../css/WorkshopForm.css";
 
 async function getWorkshop(workshopId: string) {
