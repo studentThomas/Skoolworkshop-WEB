@@ -1,9 +1,9 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import BreadCrumbs from '../../../components/BreadCrumbs';
+"use client";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import BreadCrumbs from "../../../components/BreadCrumbs";
 import Modal from "../../../components/Modal";
-import '../../../css/workshop.css'
+import "../../../css/workshop.css";
 
 async function getProducts(workshopId: string) {
   const response = await fetch(
@@ -18,7 +18,7 @@ async function getProducts(workshopId: string) {
 }
 
 function Search({ onSearch }: { onSearch: (value: string) => void }) {
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -39,13 +39,13 @@ function Search({ onSearch }: { onSearch: (value: string) => void }) {
   );
 }
 
-export default  function ProductsPage({ params }: any) {
+export default function ProductsPage({ params }: any) {
   const [products, setProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const breadCrumbs = [
-    { name: 'Home', url: '/' },
-    { name: 'Workshops', url: '/workshops' },
-    { name: 'Workshop', url: `/workshops/${params.workshop}` },
+    { name: "Home", url: "/" },
+    { name: "Workshops", url: "/workshops" },
+    { name: "Workshop", url: `/workshops/${params.workshop}` },
   ];
 
   useEffect(() => {
@@ -93,28 +93,37 @@ function Product({ product, params }: any) {
 
   return (
     <div>
-      <Modal isVisible={showModal} onClose={() => setShowModal(false)} name={Name} productId={Id} />
-      <div className={`card shadow-sm border-3 border-red-500 ${Quantity <= 0 ? 'border-danger' : ''}`}>
+      <Modal
+        isVisible={showModal}
+        onClose={() => setShowModal(false)}
+        name={Name}
+        productId={Id}
+      />
+      <div
+        className={`card shadow-sm border-3 border-red-500 ${
+          Quantity <= 0 ? "border-danger" : ""
+        }`}
+      >
         <Link href={`/workshops/${workshopId}/${Id}`}>
-          <img
-            src={Image}
-            className="card-img-top product-image"
-            alt={Name}
-          />
+          <img src={Image} className="card-img-top product-image" alt={Name} />
         </Link>
         <div className="card-body">
           <h5 className="card-title">{Name}</h5>
           <div className="d-flex justify-content-between align-items-center">
             <div className="btn-group">
               <button
-                type="button"
-                className="btn btn-sm btn-outline-secondary"
                 onClick={() => setShowModal(true)}
+                className="btn btn-sm btn-outline-secondary">
+                Update
+              </button>
+              <button
+                onClick={() => setShowModal(true)}
+                className="btn btn-sm btn-outline-secondary"
               >
                 Delete
               </button>
             </div>
-            <h5 className={`${Quantity <= 0 ? 'text-danger' : ''}`}>
+            <h5 className={`${Quantity <= 0 ? "text-danger" : ""}`}>
               {Quantity}
             </h5>
           </div>
@@ -122,5 +131,4 @@ function Product({ product, params }: any) {
       </div>
     </div>
   );
-  
 }

@@ -1,22 +1,36 @@
-import { useRouter } from "next/navigation";
 
-export default function Modal({ isVisible, onClose, name, workshopId }: any) {
-  const router = useRouter();
-
-  const deleteworkshop = async(workshopId: string) => {
-    await fetch(`https://skoolworkshop.up.railway.app/api/workshop/${workshopId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    });
-
-
-    onClose();
-    router.refresh();
-  }
-
+export default function ModalWorkshopDelete({
+  isVisible,
+  onClose,
+  name,
+  workshopId,
+  deleteWorkshop,
+}: any) {
   if (!isVisible) return null;
+
+  const handleDeleteworkshop = async () => {
+    try {
+      const response = await fetch(
+        `https://skoolworkshop.up.railway.app/api/workshop/${workshopId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Something went wrong");
+      }
+
+      const deletedWorkshop = { Id: workshopId };
+      deleteWorkshop(deletedWorkshop);
+      onClose();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="modal modal-sheet d-flex align-items-center justify-content-center bg-opacity-20 backdrop-blur-sm">
@@ -33,13 +47,16 @@ export default function Modal({ isVisible, onClose, name, workshopId }: any) {
             ></button>
           </div>
           <div className="modal-body py-0">
-            <p>Weet je zeker dat je dit item wilt verwijderen? Het is niet meer terug te halen.</p>
+            <p>
+              Weet je zeker dat je dit item wilt verwijderen? Het is niet meer
+              terug te halen.
+            </p>
           </div>
           <div className="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
             <button
               type="button"
               className="btn btn-lg btn-danger"
-              onClick={() => deleteworkshop(workshopId)}
+              onClick={handleDeleteworkshop}
             >
               Verwijderen
             </button>
