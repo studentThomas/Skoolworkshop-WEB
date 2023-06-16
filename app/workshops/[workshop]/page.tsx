@@ -5,6 +5,7 @@ import BreadCrumbs from "../../../components/BreadCrumbs";
 import ModalProductDelete from "../../../components/ModalProductDelete";
 import "../../../css/workshop.css";
 import ModalProductUpdate from "@/components/ModalProductUpdate";
+import Nav from "@/components/Nav";
 
 async function getProducts(workshopId: string) {
   const response = await fetch(
