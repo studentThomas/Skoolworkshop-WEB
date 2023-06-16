@@ -58,7 +58,7 @@ export default function Nav() {
               <Dropdown.Item href="/persons">Personen</Dropdown.Item>
               <Dropdown.Item href="#">Profiel</Dropdown.Item>
               <Dropdown.Divider /> {/* Divider */}
-              <Dropdown.Item href="#">Sign out</Dropdown.Item>
+              <Dropdown.Item href="/login">Sign out</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>

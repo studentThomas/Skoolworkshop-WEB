@@ -5,6 +5,7 @@ import BreadCrumbs from "../../components/BreadCrumbs";
 import Nav from "@/components/Nav";
 import Link from "next/link";
 import "../../css/workshop.css";
+import LoginPage from "../login/page";
 
 async function getWorkshops() {
   const response = await fetch(
@@ -15,9 +16,6 @@ async function getWorkshops() {
   return workshops;
 }
 
-
-
-
 const breadCrumbs = [
   { name: "Home", url: "/" },
   { name: "Workshops", url: "/workshops" },
@@ -26,15 +24,13 @@ const breadCrumbs = [
 export default  function WorkshopsPage() {
   const [workshops, setWorkshops] = useState<any[]>([]);
   const [filteredWorkshops, setFilteredWorkshops] = useState<any[]>([]);
-
-
-
-  localStorage.setItem('role', 'admin');
-  const role = localStorage.getItem('role');
+  const [role, setRole] = useState<string | null>(null);
 
 
   useEffect(() => {
-
+    const storedRole = localStorage.getItem('role'); // Get the role from localStorage
+    setRole(storedRole || null); // Update the role in state with a fallback to null if it's not available
+  
     fetchWorkshops();
   }, []);
 
@@ -61,7 +57,6 @@ export default  function WorkshopsPage() {
     <div>
       <Nav />
       <h1 className="text-center">{role}</h1>
-=======
     <div className="">
       <BreadCrumbs breadCrumbs={breadCrumbs} />
       <div className="album ">
@@ -87,6 +82,7 @@ export default  function WorkshopsPage() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }
