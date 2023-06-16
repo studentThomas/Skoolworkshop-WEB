@@ -87,6 +87,7 @@ export default  function WorkshopsPage() {
         </div>
       </div>
     </div>
+    </div>
   );
 }
 
