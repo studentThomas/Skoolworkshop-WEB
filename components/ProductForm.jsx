@@ -209,15 +209,6 @@ function ProductForm({ onProductCreated }) {
               />
             </label>
             <label className="flex flex-col mb-4">
-              Herbruikbaar:
-              <input
-                type="checkbox"
-                checked={reusable}
-                id="checkbox"
-                onChange={(event) => setReusable(event.target.checked)}
-              />
-            </label>
-            <label className="flex flex-col mb-4">
               Categorie:
               <select
                 value={categoryId}
@@ -228,11 +219,22 @@ function ProductForm({ onProductCreated }) {
                 <option value="">Selecteer een categorie</option>
                 {categories.map((category) => (
                   <option key={category.Id} value={category.Id}>
-                    {category.Id} - {category.Name}
+                   {category.Name}
                   </option>
                 ))}
               </select>
             </label>
+            <label className="flex flex-col mb-4">
+              Herbruikbaar:
+              <span>Ja</span>
+              <input
+                type="checkbox"
+                checked={reusable}
+                id="checkbox"
+                onChange={(event) => setReusable(event.target.checked)}
+                className="px-2 py-1 border rounded mr-24"
+                />
+                </label>
             <button
               type="submit"
               className="bg-blue-500 text-white py-1 px-4 rounded"
