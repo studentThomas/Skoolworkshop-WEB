@@ -1,3 +1,4 @@
+import React, { useEffect, useRef } from "react";
 
 export default function ModalWorkshopDelete({
   isVisible,
@@ -6,9 +7,27 @@ export default function ModalWorkshopDelete({
   workshopId,
   deleteWorkshop,
 }: any) {
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    if (isVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isVisible, onClose]);
+
   if (!isVisible) return null;
 
-  const handleDeleteworkshop = async () => {
+  const handleDeleteWorkshop = async () => {
     try {
       const response = await fetch(
         `https://skoolworkshop.up.railway.app/api/workshop/${workshopId}`,
@@ -34,7 +53,7 @@ export default function ModalWorkshopDelete({
 
   return (
     <div className="modal modal-sheet d-flex align-items-center justify-content-center bg-opacity-20 backdrop-blur-sm">
-      <div className="modal-dialog">
+      <div className="modal-dialog" ref={modalRef}>
         <div className="modal-content rounded-4 shadow">
           <div className="modal-header border-bottom-0">
             <h1 className="modal-title fs-5">{name}</h1>
@@ -56,7 +75,7 @@ export default function ModalWorkshopDelete({
             <button
               type="button"
               className="btn btn-lg btn-danger"
-              onClick={handleDeleteworkshop}
+              onClick={handleDeleteWorkshop}
             >
               Verwijderen
             </button>

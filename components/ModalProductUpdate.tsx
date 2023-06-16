@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../css/Modal.css";
 
 export default function ModalProductUpdate({
@@ -22,6 +22,23 @@ export default function ModalProductUpdate({
   const [reusable, setReusable] = useState(initialReusable || "");
   const [minStock, setMinStock] = useState(initialMinStock || "");
   const [categories, setCategories] = useState<any[]>([]); // Explicit type annotation for categories
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    if (isVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isVisible, onClose]);
 
   useEffect(() => {
     fetch("https://skoolworkshop.up.railway.app/api/categories")
@@ -43,30 +60,28 @@ export default function ModalProductUpdate({
         console.error("Error fetching categories:", error);
       });
   }, []);
+
   if (!isVisible) return null;
 
   const reusableValue = reusable === "Yes" ? 1 : 0;
 
   const handleUpdateProduct = async () => {
     try {
-      await fetch(
-        `https://skoolworkshop.up.railway.app/api/product/${productId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name,
-            categoryId,
-            description,
-            code,
-            image,
-            reusable: reusableValue,
-            minStock,
-          }),
-        }
-      );
+      await fetch(`https://skoolworkshop.up.railway.app/api/product/${productId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          categoryId,
+          description,
+          code,
+          image,
+          reusable: reusableValue,
+          minStock,
+        }),
+      });
 
       const updatedProduct = {
         Id: productId,
@@ -87,11 +102,8 @@ export default function ModalProductUpdate({
 
   return (
     <div className="modal modal-sheet d-flex align-items-center justify-content-center bg-opacity-20 backdrop-blur-sm">
-      <div className="modal-dialog">
-        <div
-          className="modal-content rounded-4 shadow"
-          style={{ width: "400px" }}
-        >
+      <div className="modal-dialog" ref={modalRef}>
+        <div className="modal-content rounded-4 shadow" style={{ width: "400px" }}>
           <div className="modal-header border-bottom-0">
             <h1 className="modal-title fs-5">{name}</h1>
             <button
@@ -182,6 +194,7 @@ export default function ModalProductUpdate({
                 required
                 className="px-2 py-1 border rounded"
               />
+            </div>
             <div className="mt-4 d-flex flex-column">
               <p>
                 <strong>Herbruikbaar:</strong>
@@ -196,8 +209,7 @@ export default function ModalProductUpdate({
                   }
                   className="px-2 py-1 border rounded mb-4 ms-2"
                 />
-                </div>
-            </div>
+              </div>
             </div>
           </div>
           <div className="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">

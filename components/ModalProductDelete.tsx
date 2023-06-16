@@ -1,3 +1,6 @@
+import { useEffect, useRef } from "react";
+import "../css/Modal.css";
+
 export default function ModalProductDelete({
   isVisible,
   onClose,
@@ -5,6 +8,22 @@ export default function ModalProductDelete({
   productId,
   deleteProduct,
 }: any) {
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
+
   if (!isVisible) return null;
 
   const handleDeleteProduct = async () => {
@@ -35,7 +54,7 @@ export default function ModalProductDelete({
   return (
     <div className="modal modal-sheet d-flex align-items-center justify-content-center bg-opacity-20 backdrop-blur-sm">
       <div className="modal-dialog">
-        <div className="modal-content rounded-4 shadow">
+        <div className="modal-content rounded-4 shadow" ref={modalRef}>
           <div className="modal-header border-bottom-0">
             <h1 className="modal-title fs-5">{name}</h1>
             <button

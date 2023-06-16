@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 export default function ModalWorkshopUpdate({
   isVisible,
@@ -12,24 +12,49 @@ export default function ModalWorkshopUpdate({
   const [name, setName] = useState(initialName);
   const [categoryName, setCategoryName] = useState(initialCategoryName);
   const [image, setImage] = useState(initialImage);
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    if (isVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isVisible, onClose]);
 
   if (!isVisible) return null;
 
   const handleUpdateWorkshop = async () => {
     try {
-      const response = await fetch(`https://skoolworkshop.up.railway.app/api/workshop/${workshopId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, categoryName, image }),
-      });
+      const response = await fetch(
+        `https://skoolworkshop.up.railway.app/api/workshop/${workshopId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, categoryName, image }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Something went wrong");
       }
 
-      const updatedWorkshop = { Id: workshopId, Name: name, Image: image, CategoryName: categoryName };
+      const updatedWorkshop = {
+        Id: workshopId,
+        Name: name,
+        Image: image,
+        CategoryName: categoryName,
+      };
       updateWorkshop(updatedWorkshop);
       onClose();
     } catch (error) {
@@ -39,7 +64,7 @@ export default function ModalWorkshopUpdate({
 
   return (
     <div className="modal modal-sheet d-flex align-items-center justify-content-center bg-opacity-20 backdrop-blur-sm">
-      <div className="modal-dialog">
+      <div className="modal-dialog" ref={modalRef}>
         <div className="modal-content rounded-4 shadow" style={{ width: "400px" }}>
           <div className="modal-header border-bottom-0">
             <h1 className="modal-title fs-5">{name}</h1>
