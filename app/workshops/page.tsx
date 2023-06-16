@@ -83,7 +83,6 @@ export default function WorkshopsPage() {
       return deletedFilteredWorkshops;
     });
   };
-  
 
   return (
     <div>
@@ -105,7 +104,11 @@ export default function WorkshopsPage() {
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {filteredWorkshops.map((workshop) => (
               <div className="col" key={workshop.Id}>
-                <WorkshopCard workshop={workshop} updateWorkshop={updateWorkshop} deleteWorkshop={deleteWorkshop} />
+                <WorkshopCard
+                  workshop={workshop}
+                  updateWorkshop={updateWorkshop}
+                  deleteWorkshop={deleteWorkshop}
+                />
               </div>
             ))}
           </div>
@@ -139,28 +142,28 @@ function WorkshopCard({ workshop, updateWorkshop, deleteWorkshop }: any) {
         updateWorkshop={updateWorkshop}
       />
 
-      <div className="card shadow-sm">
-        <Link href={`/workshops/${Id}`}>
-          <img src={Image} className="card-img-top workshop-image" alt={Name} />
-        </Link>
+      <div className="card workshop-card shadow-sm">
+        <div className="workshop-image-container">
+          <Link href={`/workshops/${Id}`}>
+            <img src={Image} className="workshop-image" alt={Name} />
+          </Link>
+        </div>
         <div className="card-body">
           <h5 className="card-title">{Name}</h5>
           <p className="card-text">{CategoryName}</p>
           <div className="d-flex justify-content-between align-items-center">
-            <div className="btn-group">
-              <button
-                onClick={() => setShowModalProduct(true)}
-                className="btn btn-sm btn-outline-secondary"
-              >
-                Aanpassen
-              </button>
-              <button
-                onClick={() => setShowModal(true)}
-                className="btn btn-sm btn-outline-secondary"
-              >
-                Verwijder
-              </button>
-            </div>
+            <button
+              onClick={() => setShowModalProduct(true)}
+              className="btn btn-sm btn-outline-secondary"
+            >
+              Aanpassen
+            </button>
+            <button
+              onClick={() => setShowModal(true)}
+              className="btn btn-sm btn-outline-secondary"
+            >
+              Verwijder
+            </button>
           </div>
         </div>
       </div>

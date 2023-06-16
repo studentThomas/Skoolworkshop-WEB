@@ -166,24 +166,23 @@ function Product({ product, params, deleteProduct, updateProduct }: any) {
         minStock={MinStock}
         updateProduct={updateProduct}
       />
-      <div
-        className={`card shadow-sm border-3 border-red-500 ${
-          Quantity <= 0 ? "border-danger" : ""
-        }`}
-      >
+      <div className={`card shadow-sm border-3 border-red-500 ${Quantity <= 0 ? "border-danger" : ""}`}>
         <Link href={`/workshops/${workshopId}/${Id}`}>
           <img src={Image} className="card-img-top product-image" alt={Name} />
         </Link>
-        <div className="card-body">
-          <h5 className="card-title">{Name}</h5>
-          <div className="d-flex justify-content-between align-items-center">
-            <div className="btn-group">
+        <div className="card-body d-flex flex-column">
+          <h5 className="card-title mb-auto">{Name}</h5>
+          <div className="d-flex justify-content-between align-items-start mt-2">
+            <div className="d-flex gap-2">
               <button
                 onClick={() => setShowModalUpdate(true)}
                 className="btn btn-sm btn-outline-secondary"
               >
                 Update
               </button>
+            </div>
+            <h5 className={`text-end ${Quantity <= 0 ? "text-danger" : ""}`}>{Quantity}</h5>
+            <div className="d-flex justify-content-end">
               <button
                 onClick={() => setShowModal(true)}
                 className="btn btn-sm btn-outline-secondary"
@@ -191,9 +190,6 @@ function Product({ product, params, deleteProduct, updateProduct }: any) {
                 Delete
               </button>
             </div>
-            <h5 className={`${Quantity <= 0 ? "text-danger" : ""}`}>
-              {Quantity}
-            </h5>
           </div>
         </div>
       </div>
