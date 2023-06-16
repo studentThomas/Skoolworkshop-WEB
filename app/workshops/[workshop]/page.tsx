@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import BreadCrumbs from "../../../components/BreadCrumbs";
-import Modal from "../../../components/Modal";
+import ModalProductDelete from "../../../components/ModalProductDelete";
 import "../../../css/workshop.css";
+import ModalProductUpdate from "@/components/ModalProductUpdate";
 
 async function getProducts(workshopId: string) {
   const response = await fetch(
@@ -65,6 +66,42 @@ export default function ProductsPage({ params }: any) {
     setFilteredProducts(filtered);
   };
 
+  const updateProduct = (updatedProduct: any) => {
+    setProducts((prevProducts) => {
+      const updatedProducts = prevProducts.map((product) => {
+        if (product.Id === updatedProduct.Id) {
+          return { ...product, ...updatedProduct };
+        }
+        return product;
+      });
+      return updatedProducts;
+    });
+    setFilteredProducts((prevFilteredProducts) => {
+      const updatedFilteredProducts = prevFilteredProducts.map((product) => {
+        if (product.Id === updatedProduct.Id) {
+          return { ...product, ...updatedProduct };
+        }
+        return product;
+      });
+      return updatedFilteredProducts;
+    });
+  };
+
+  const deleteProduct = (deletedProduct: any) => {
+    setProducts((prevProducts) => {
+      const deletedProducts = prevProducts.filter(
+        (product) => product.Id !== deletedProduct.Id
+      );
+      return deletedProducts;
+    });
+    setFilteredProducts((prevProducts) => {
+      const deletedFilteredProducts = prevProducts.filter(
+        (product) => product.Id !== deletedProduct.Id
+      );
+      return deletedFilteredProducts;
+    });
+  };
+
   return (
     <div>
       <BreadCrumbs breadCrumbs={breadCrumbs} />
@@ -76,7 +113,12 @@ export default function ProductsPage({ params }: any) {
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {filteredProducts.map((product) => (
               <div className="col" key={product.Id}>
-                <Product product={product} params={params} />
+                <Product
+                  product={product}
+                  params={params}
+                  deleteProduct={deleteProduct}
+                  updateProduct={updateProduct}
+                />
               </div>
             ))}
           </div>
@@ -86,18 +128,43 @@ export default function ProductsPage({ params }: any) {
   );
 }
 
-function Product({ product, params }: any) {
-  const { Id, Name, Quantity, Image } = product;
+function Product({ product, params, deleteProduct, updateProduct }: any) {
+  const {
+    Id,
+    Name,
+    CategoryId,
+    Description,
+    Code,
+    Quantity,
+    Image,
+    Reusable,
+    MinStock,
+  } = product;
   const workshopId = params.workshop;
   const [showModal, setShowModal] = useState(false);
+  const [showModalUpdate, setShowModalUpdate] = useState(false);
 
   return (
     <div>
-      <Modal
+      <ModalProductDelete
         isVisible={showModal}
         onClose={() => setShowModal(false)}
         name={Name}
         productId={Id}
+        deleteProduct={deleteProduct}
+      />
+      <ModalProductUpdate
+        isVisible={showModalUpdate}
+        onClose={() => setShowModalUpdate(false)}
+        productId={Id}
+        name={Name}
+        categoryId={CategoryId}
+        description={Description}
+        code={Code}
+        image={Image}
+        reusable={Reusable}
+        minStock={MinStock}
+        updateProduct={updateProduct}
       />
       <div
         className={`card shadow-sm border-3 border-red-500 ${
@@ -112,8 +179,9 @@ function Product({ product, params }: any) {
           <div className="d-flex justify-content-between align-items-center">
             <div className="btn-group">
               <button
-                onClick={() => setShowModal(true)}
-                className="btn btn-sm btn-outline-secondary">
+                onClick={() => setShowModalUpdate(true)}
+                className="btn btn-sm btn-outline-secondary"
+              >
                 Update
               </button>
               <button

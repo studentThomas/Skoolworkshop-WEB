@@ -1,0 +1,9 @@
+.modal-dialog input[type="checkbox"] {
+  margin-right: 260px;
+  transform: translateY(5px);
+}
+
+.modal-content {
+  max-height: 80vh; /* Adjust the value as needed */
+  overflow-y: auto;
+}

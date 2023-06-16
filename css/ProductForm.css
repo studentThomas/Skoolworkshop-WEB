@@ -22,13 +22,12 @@
 
 .product-form-container label {
   display: flex;
-  align-items: center;
   margin-bottom: 10px;
 }
 
 .product-form-container input[type="checkbox"] {
-  margin-right: 6px;
-  transform: translateY(5px);
+  margin-left: -90px;
+  transform: translateY(-16px);
 }
 
 .product-form-container input,
@@ -56,4 +55,3 @@
   text-align: center;
   margin-top: 10px;
 }
-

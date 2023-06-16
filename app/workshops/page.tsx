@@ -77,10 +77,10 @@ export default function WorkshopsPage() {
       return deletedWorkshops;
     });
     setFilteredWorkshops((prevFilteredWorkshops) => {
-      const updatedFilteredWorkshops = prevFilteredWorkshops.filter(
+      const deletedFilteredWorkshops = prevFilteredWorkshops.filter(
         (workshop) => workshop.Id !== deletedWorkshop.Id
       );
-      return updatedFilteredWorkshops;
+      return deletedFilteredWorkshops;
     });
   };
   
