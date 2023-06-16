@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import BreadCrumbs from "../../components/BreadCrumbs";
+import Nav from "@/components/Nav";
 import Link from "next/link";
 import "../../css/workshop.css";
 
@@ -14,6 +15,9 @@ async function getWorkshops() {
   return workshops;
 }
 
+
+
+
 const breadCrumbs = [
   { name: "Home", url: "/" },
   { name: "Workshops", url: "/workshops" },
@@ -23,7 +27,14 @@ export default  function WorkshopsPage() {
   const [workshops, setWorkshops] = useState<any[]>([]);
   const [filteredWorkshops, setFilteredWorkshops] = useState<any[]>([]);
 
+
+
+  localStorage.setItem('role', 'admin');
+  const role = localStorage.getItem('role');
+
+
   useEffect(() => {
+
     fetchWorkshops();
   }, []);
 
@@ -47,6 +58,10 @@ export default  function WorkshopsPage() {
   };
 
   return (
+    <div>
+      <Nav />
+      <h1 className="text-center">{role}</h1>
+=======
     <div className="">
       <BreadCrumbs breadCrumbs={breadCrumbs} />
       <div className="album ">

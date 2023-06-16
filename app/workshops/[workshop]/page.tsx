@@ -1,9 +1,12 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from "next/navigation";
+import Nav from "@/components/Nav";
 import BreadCrumbs from '../../../components/BreadCrumbs';
 import Modal from "../../../components/Modal";
 import '../../../css/workshop.css'
+// import '../../../css/Forbidden.css'
 
 async function getProducts(workshopId: string) {
   const response = await fetch(
@@ -39,14 +42,23 @@ function Search({ onSearch }: { onSearch: (value: string) => void }) {
   );
 }
 
+
+
 export default  function ProductsPage({ params }: any) {
   const [products, setProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+
+
+  localStorage.setItem('role', 'admin');
+  const role = localStorage.getItem('role');
+
   const breadCrumbs = [
     { name: 'Home', url: '/' },
     { name: 'Workshops', url: '/workshops' },
     { name: 'Workshop', url: `/workshops/${params.workshop}` },
   ];
+
+
 
   useEffect(() => {
     async function fetchData() {
@@ -65,8 +77,12 @@ export default  function ProductsPage({ params }: any) {
     setFilteredProducts(filtered);
   };
 
+
+
   return (
     <div>
+        <Nav />
+        <h1>{role}</h1>
       <BreadCrumbs breadCrumbs={breadCrumbs} />
 
       <div className="album">

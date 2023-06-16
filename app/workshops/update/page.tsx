@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Modal from "../../../components/ModalWorkshop";
+import Nav from "@/components/Nav";
 import "../../../css/WorkshopForm.css";
 
 async function getWorkshop(workshopId: string) {
@@ -83,6 +84,7 @@ export default function UpdateWorkshopPage() {
 
   return (
     <div className="workshop-form-container">
+            <Nav />
       <div>
       <Modal isVisible={showModal} onClose={() => setShowModal(false)} name={name} workshopId={workshop} />
         <h2 className="text-center text-2xl font-bold mb-4">

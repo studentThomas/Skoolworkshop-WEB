@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import BreadCrumbs from "@/components/BreadCrumbs";
+import Nav from "@/components/Nav";
 import "../../../css/workshop.css";
 import { updateQuantity } from "../../../components/UpdateQuantity";
 
@@ -76,42 +77,45 @@ export default function updateProduct({ params }: any) {
   
 
   return (
+    <div>
+    <Nav />
     <form onSubmit={create}>
-      <div className="container text-center my-5">
-        <BreadCrumbs breadCrumbs={breadCrumbs} />
-        <h1 style={{ color: "orange" }}>Product</h1>
-        <div className="my-4 div-style">
-          <h2>{product.Name}</h2>
-          <p>{product.Description}</p>
-          <p style={{ color: "gray" }}>Code: {product.Code}</p>
-          <img
-            src={product.Image}
-            alt="Product Image"
-            className="product-detailimage"
+    <div className="container text-center my-5">
+      <BreadCrumbs breadCrumbs={breadCrumbs} />
+      <h1 style={{ color: "orange" }}>Product</h1>
+      <div className="my-4 div-style">
+        <h2>{product.Name}</h2>
+        <p>{product.Description}</p>
+        <p style={{ color: "gray" }}>Code: {product.Code}</p>
+        <img
+          src={product.Image}
+          alt="Product Image"
+          className="product-detailimage"
+        />
+        <p>Herbruikbaar: {product.Reusable ? "Ja" : "Nee"}</p>
+        <p>Voorraad: {product.Quantity}</p>
+        <div className="input-container">
+          <input
+            type="range"
+            min="-50"
+            max="50"
+            value={quantity}
+            onChange={handleQuantityChange}
           />
-          <p>Herbruikbaar: {product.Reusable ? "Ja" : "Nee"}</p>
-          <p>Voorraad: {product.Quantity}</p>
-          <div className="input-container">
-            <input
-              type="range"
-              min="-100"
-              max="100"
-              value={quantity}
-              onChange={handleQuantityChange}
-            />
-            <div className="input-space" />
-            <input
-              type="number"
-              min="-100"
-              max="100"
-              value={quantity}
-              onChange={handleQuantityChange}
-            />
-          </div>
-          <button>Voorraad bijwerken</button>
-          <p>{notification}</p>
+          <div className="input-space" />
+          <input
+            type="number"
+            min="-50"
+            max="50"
+            value={quantity}
+            onChange={handleQuantityChange}
+          />
         </div>
+        <button>Voorraad bijwerken</button>
+        <p>{notification}</p>
       </div>
-    </form>
+    </div>
+  </form>
+  </div>
   );
 }
