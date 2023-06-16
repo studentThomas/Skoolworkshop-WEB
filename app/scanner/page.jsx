@@ -3,6 +3,7 @@
 import React, { useEffect, useState,  } from 'react';
 import { useRouter } from "next/navigation";
 import { Html5QrcodeScanner } from 'html5-qrcode';
+import Nav from '@/components/Nav';
 
 function Scanner() {
   const [scanResult, setScanResult] = useState(null);
@@ -33,6 +34,7 @@ function Scanner() {
 
   return (
     <div className="App">
+      <Nav />
       <h1>Scanner</h1>
       {scanResult ? (
         <div>

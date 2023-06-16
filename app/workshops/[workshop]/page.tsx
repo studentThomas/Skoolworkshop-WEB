@@ -40,14 +40,21 @@ function Search({ onSearch }: { onSearch: (value: string) => void }) {
   );
 }
 
-export default function ProductsPage({ params }: any) {
+export default  function ProductsPage({ params }: any) {
   const [products, setProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+
+
+  localStorage.setItem('role', 'admin');
+  const role = localStorage.getItem('role');
+
   const breadCrumbs = [
     { name: "Home", url: "/" },
     { name: "Workshops", url: "/workshops" },
     { name: "Workshop", url: `/workshops/${params.workshop}` },
   ];
+
+
 
   useEffect(() => {
     async function fetchData() {
@@ -104,6 +111,8 @@ export default function ProductsPage({ params }: any) {
 
   return (
     <div>
+        <Nav />
+        <h1>{role}</h1>
       <BreadCrumbs breadCrumbs={breadCrumbs} />
 
       <div className="album">
