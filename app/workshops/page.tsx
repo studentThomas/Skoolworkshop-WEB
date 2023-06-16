@@ -83,7 +83,7 @@ export default function WorkshopsPage() {
       return deletedFilteredWorkshops;
     });
   };
-
+ 
   return (
     <div>
       <BreadCrumbs breadCrumbs={breadCrumbs} />
