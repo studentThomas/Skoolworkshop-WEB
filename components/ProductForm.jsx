@@ -60,6 +60,18 @@ function ProductForm({ onProductCreated }) {
   const handleAddProduct = async (event) => {
     event.preventDefault();
 
+    let number = code;
+
+
+    if(code === '') {
+      for (let i = 0; i < 13; i++) {
+        const randomNumber = Math.floor(Math.random() * 9) + 1;
+        number += randomNumber.toString();
+      }
+    }
+
+   
+
     // Validate Workshop ID
     const workshopIdNumber = parseInt(workshopId, 10);
     if (
@@ -85,7 +97,7 @@ function ProductForm({ onProductCreated }) {
             name,
             description,
             image,
-            code,
+            code: number,
             quantity,
             workshopId: workshopIdNumber,
             participantMultiplier,
