@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import BreadCrumbs from "@/components/BreadCrumbs";
 import "../../../../css/workshop.css";
 import { updateQuantity } from "../../../../components/UpdateQuantity";
+import Barcode from "react-barcode";
+import Nav from "@/components/Nav";
+
 
 async function getProduct(productId: string) {
   const response = await fetch(
@@ -77,14 +80,17 @@ export default function updateProduct({ params }: any) {
   
 
   return (
-    <form onSubmit={create}>
+    <div>
+      <Nav />
+      <form onSubmit={create}>
       <div className="container text-center my-5">
         <BreadCrumbs breadCrumbs={breadCrumbs} />
         <h1 style={{ color: "orange" }}>Product</h1>
         <div className="my-4 div-style">
+
           <h2>{product.Name}</h2>
+          <Barcode value={product.Code} />
           <p>{product.Description}</p>
-          <p style={{ color: "gray" }}>Code: {product.Code}</p>
           <img
             src={product.Image}
             alt="Product Image"
@@ -114,5 +120,8 @@ export default function updateProduct({ params }: any) {
         </div>
       </div>
     </form>
+    </div>
+
+ 
   );
 }

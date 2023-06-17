@@ -1,0 +1,70 @@
+.workshop-form-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .workshop-form-container > div {
+    margin: 0 20px;
+    flex-basis: 100%;
+    max-width: 400px;
+  }
+  
+  .workshop-form-container h2 {
+    text-align: center;
+  }
+  
+  .workshop-form-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .workshop-form-container label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align the labels and input fields vertically */
+    margin-bottom: 10px;
+  }
+  
+  .workshop-form-container input[type="checkbox"] {
+    margin-top: 6px;
+  }
+  
+  .workshop-form-container input,
+  .workshop-form-container textarea,
+  .workshop-form-container select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 250px;
+  }
+  
+  /* .workshop-form-container button {
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    background-color: orange;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  } */
+
+  .submit {
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    background-color: orange;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .workshop-form-container p {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
