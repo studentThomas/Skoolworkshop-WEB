@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import ProductForm from "../../components/ProductForm";
+import Nav from "../../components/Nav";
 
 function AddProductPage() {
   const handleProductCreated = () => {
@@ -10,6 +11,7 @@ function AddProductPage() {
 
   return (
     <div>
+      <Nav/>
       <ProductForm onProductCreated={handleProductCreated} />
     </div>
   );
