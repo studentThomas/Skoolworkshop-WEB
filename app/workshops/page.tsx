@@ -7,7 +7,6 @@ import Link from "next/link";
 import ModalWorkshopDelete from "../../components/ModalWorkshopDelete";
 import ModalWorkshopUpdate from "../../components/ModalWorkshopUpdate";
 import "../../css/workshop.css";
-import LoginPage from "../login/page";
 
 async function getWorkshops() {
   const response = await fetch(
