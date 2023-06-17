@@ -177,7 +177,6 @@ function ProductForm({ onProductCreated }) {
                 type="text"
                 value={code}
                 onChange={(event) => setCode(event.target.value)}
-                required
                 className="px-2 py-1 border rounded"
               />
             </label>
