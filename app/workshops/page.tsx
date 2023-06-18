@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import BreadCrumbs from "../../components/BreadCrumbs";
 import Nav from "@/components/Nav";
 import Link from "next/link";
+import ModalWorkshopDelete from "../../components/ModalWorkshopDelete";
+import ModalWorkshopUpdate from "../../components/ModalWorkshopUpdate";
 import "../../css/workshop.css";
 import LoginPage from "../login/page";
 import { useRouter } from "next/navigation";
@@ -61,7 +63,43 @@ export default  function WorkshopsPage() {
   // if(role !== 'admin') {
   //   router.push('/forbidden');
   // }
+  
+  const updateWorkshop = (updatedWorkshop: any) => {
+    setWorkshops((prevWorkshops) => {
+      const updatedWorkshops = prevWorkshops.map((workshop) => {
+        if (workshop.Id === updatedWorkshop.Id) {
+          return { ...workshop, ...updatedWorkshop };
+        }
+        return workshop;
+      });
+      return updatedWorkshops;
+    });
+    setFilteredWorkshops((prevFilteredWorkshops) => {
+      const updatedFilteredWorkshops = prevFilteredWorkshops.map((workshop) => {
+        if (workshop.Id === updatedWorkshop.Id) {
+          return { ...workshop, ...updatedWorkshop };
+        }
+        return workshop;
+      });
+      return updatedFilteredWorkshops;
+    });
+  };
 
+  const deleteWorkshop = (deletedWorkshop: any) => {
+    setWorkshops((prevWorkshops) => {
+      const deletedWorkshops = prevWorkshops.filter(
+        (workshop) => workshop.Id !== deletedWorkshop.Id
+      );
+      return deletedWorkshops;
+    });
+    setFilteredWorkshops((prevFilteredWorkshops) => {
+      const deletedFilteredWorkshops = prevFilteredWorkshops.filter(
+        (workshop) => workshop.Id !== deletedWorkshop.Id
+      );
+      return deletedFilteredWorkshops;
+    });
+  };
+ 
   return (
     <div>
       <Nav />
@@ -85,7 +123,11 @@ export default  function WorkshopsPage() {
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {filteredWorkshops.map((workshop) => (
               <div className="col" key={workshop.Id}>
-                <WorkshopCard workshop={workshop} />
+                <WorkshopCard
+                  workshop={workshop}
+                  updateWorkshop={updateWorkshop}
+                  deleteWorkshop={deleteWorkshop}
+                />
               </div>
             ))}
           </div>
@@ -96,31 +138,52 @@ export default  function WorkshopsPage() {
   );
 }
 
-function WorkshopCard({ workshop }: { workshop: any }) {
+function WorkshopCard({ workshop, updateWorkshop, deleteWorkshop }: any) {
   const { Id, Name, Image, CategoryName } = workshop;
+  const [showModal, setShowModal] = useState(false);
+  const [showModalProduct, setShowModalProduct] = useState(false);
 
   return (
     <div>
-      <div className="card shadow-sm">
-        <Link href={`/workshops/${Id}`}>
-          <img
-            src={Image}
-            className="card-img-top workshop-image"
-            alt={Name}
-          />
-        </Link>
+      <ModalWorkshopDelete
+        isVisible={showModal}
+        onClose={() => setShowModal(false)}
+        name={Name}
+        workshopId={Id}
+        deleteWorkshop={deleteWorkshop}
+      />
+      <ModalWorkshopUpdate
+        isVisible={showModalProduct}
+        onClose={() => setShowModalProduct(false)}
+        name={Name}
+        categoryName={CategoryName}
+        image={Image}
+        workshopId={Id}
+        updateWorkshop={updateWorkshop}
+      />
+
+      <div className="card workshop-card shadow-sm">
+        <div className="workshop-image-container">
+          <Link href={`/workshops/${Id}`}>
+            <img src={Image} className="workshop-image" alt={Name} />
+          </Link>
+        </div>
         <div className="card-body">
           <h5 className="card-title">{Name}</h5>
           <p className="card-text">{CategoryName}</p>
           <div className="d-flex justify-content-between align-items-center">
-            <div className="btn-group">
-              <Link
-                href={`/workshops/update?workshop=${Id}`}
-                className="btn btn-sm btn-outline-secondary"
-              >
-                Update
-              </Link>
-            </div>
+            <button
+              onClick={() => setShowModalProduct(true)}
+              className="btn btn-sm btn-outline-secondary"
+            >
+              Aanpassen
+            </button>
+            <button
+              onClick={() => setShowModal(true)}
+              className="btn btn-sm btn-outline-secondary"
+            >
+              Verwijder
+            </button>
           </div>
         </div>
       </div>

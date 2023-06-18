@@ -3,6 +3,7 @@ import React from "react";
 import { useEffect } from "react";
 import router from "next/router";
 import ProductForm from "../../components/ProductForm";
+import Nav from "../../components/Nav";
 
 function AddProductPage() {
   const handleProductCreated = () => {
@@ -21,6 +22,7 @@ function AddProductPage() {
 
   return (
     <div>
+      <Nav/>
       <ProductForm onProductCreated={handleProductCreated} />
     </div>
   );
