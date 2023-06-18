@@ -20,8 +20,9 @@ async function login(email: any, password: any) {
 
     if (response.ok && response.status === 200) {
       // Login successful
-      const { Role } = data.data; // Assuming the role information is provided in the response as "Role"
+      const { Role, EmailAdress } = data.data; // Assuming the role information is provided in the response as "Role"
       localStorage.setItem('role', Role); // Store the role in localStorage
+      localStorage.setItem('email', EmailAdress); // Store the email in localStorage
       console.log('Login successful');
     } else {
       // Login failed
