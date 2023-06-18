@@ -113,7 +113,6 @@ export default  function ProductsPage({ params }: any) {
   return (
     <div>
         <Nav />
-        <h1 className='text-center'>{role}</h1>
       <BreadCrumbs breadCrumbs={breadCrumbs} />
 
       <div className="album">
@@ -166,14 +165,14 @@ function Product({ product, params, deleteProduct, updateProduct }: any) {
       <ModalProductUpdate
         isVisible={showModalUpdate}
         onClose={() => setShowModalUpdate(false)}
-        productId={Id}
         name={Name}
-        categoryId={CategoryId}
+        categoryId={product.CategoryId}
         description={Description}
         code={Code}
         image={Image}
         reusable={Reusable}
         minStock={MinStock}
+        productId={Id}
         updateProduct={updateProduct}
       />
       <div className={`card shadow-sm border-3 border-red-500 ${Quantity <= 0 ? "border-danger" : ""}`}>

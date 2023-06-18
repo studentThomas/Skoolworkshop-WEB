@@ -96,7 +96,7 @@ export default function LoginPage() {
           <label className="form-check-label">Remember me</label>
         </div>
         <button className="btn btn-warning w-100 py-2" type="button" onClick={handleLogin}>
-          Sign in
+          Login
         </button>
 
         {error && <p className="text-danger mt-3">{error}</p>}

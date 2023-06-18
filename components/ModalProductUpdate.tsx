@@ -1,28 +1,46 @@
 import React, { useEffect, useRef, useState } from "react";
-import "../css/Modal.css";
 
 export default function ModalProductUpdate({
   isVisible,
   onClose,
-  name: initialName,
   categoryId: initialCategoryId,
+  name: initialName,
   description: initialDescription,
   code: initialCode,
   image: initialImage,
-  Reusable: initialReusable,
+  reusable: initialReusable,
   minStock: initialMinStock,
   productId,
   updateProduct,
 }: any) {
+  const [categories, setCategories] = useState([]);
+  const [categoryId, setCategoryId] = useState(initialCategoryId);
   const [name, setName] = useState(initialName);
-  const [categoryId, setCategoryId] = useState(initialCategoryId || "");
-  const [description, setDescription] = useState(initialDescription || "");
-  const [code, setCode] = useState(initialCode || "");
-  const [image, setImage] = useState(initialImage || "");
-  const [reusable, setReusable] = useState(initialReusable || "");
-  const [minStock, setMinStock] = useState(initialMinStock || "");
-  const [categories, setCategories] = useState<any[]>([]); // Explicit type annotation for categories
+  const [description, setDescription] = useState(initialDescription);
+  const [code, setCode] = useState(initialCode);
+  const [image, setImage] = useState(initialImage);
+  const [reusable, setReusable] = useState(Boolean(initialReusable));
+  const [minStock, setMinStock] = useState(initialMinStock);
   const modalRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("https://skoolworkshop.up.railway.app/api/categories");
+        const data = await response.json();
+        if (response.ok) {
+          setCategories(data.data);
+          setCategoryId(initialCategoryId);
+        } else {
+          throw new Error(data.message || "Something went wrong");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchCategories();
+  }, []);  
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -40,53 +58,37 @@ export default function ModalProductUpdate({
     };
   }, [isVisible, onClose]);
 
-  useEffect(() => {
-    fetch("https://skoolworkshop.up.railway.app/api/categories")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch categories");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (Array.isArray(data.data)) {
-          setCategories(data.data);
-          console.log(data.data); // Log the retrieved categories array
-        } else {
-          console.error("Categories data is not an array:", data);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching categories:", error);
-      });
-  }, []);
-
   if (!isVisible) return null;
-
-  const reusableValue = reusable === "Yes" ? 1 : 0;
 
   const handleUpdateProduct = async () => {
     try {
-      await fetch(`https://skoolworkshop.up.railway.app/api/product/${productId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          categoryId,
-          description,
-          code,
-          image,
-          reusable: reusableValue,
-          minStock,
-        }),
-      });
+      const response = await fetch(
+        `https://skoolworkshop.up.railway.app/api/product/${productId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            categoryId,
+            name,
+            description,
+            code,
+            image,
+            reusable: Number(reusable),
+            minStock,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Something went wrong");
+      }
 
       const updatedProduct = {
         Id: productId,
-        Name: name,
         CategoryId: categoryId,
+        Name: name,
         Description: description,
         Code: code,
         Image: image,
@@ -129,7 +131,7 @@ export default function ModalProductUpdate({
             </div>
             <div className="mb-4 d-flex flex-column">
               <p>
-                <strong>Bescrhijving:</strong>
+                <strong>Beschrijving:</strong>
               </p>
               <input
                 type="text"
@@ -144,9 +146,9 @@ export default function ModalProductUpdate({
                 <strong>Code:</strong>
               </p>
               <input
-                type="text"
+                type="number"
                 value={code}
-                onChange={(event) => setCode(event.target.value)}
+                onChange={(event) => setCode(Number(event.target.value))}
                 required
                 className="px-2 py-1 border rounded"
               />
@@ -163,38 +165,6 @@ export default function ModalProductUpdate({
                 className="px-2 py-1 border rounded"
               />
             </div>
-            <div className="mb-4 d-flex flex-column">
-              <p>
-                <strong>Categorie:</strong>
-              </p>
-              {categories.length > 0 && (
-                <select
-                  value={categoryId}
-                  onChange={(event) => setCategoryId(event.target.value)}
-                  required
-                  className="px-2 py-1 border rounded"
-                >
-                  <option value="">Selecteer een categorie</option>
-                  {categories.map((category) => (
-                    <option key={category.Id} value={category.Id}>
-                      {category.Name}
-                    </option>
-                  ))}
-                </select>
-              )}
-            </div>
-            <div className="d-flex flex-column">
-              <p>
-                <strong>Minimale voorraad:</strong>
-              </p>
-              <input
-                type="number"
-                value={minStock}
-                onChange={(event) => setMinStock(event.target.value)}
-                required
-                className="px-2 py-1 border rounded"
-              />
-            </div>
             <div className="mt-4 d-flex flex-column">
               <p>
                 <strong>Herbruikbaar:</strong>
@@ -203,13 +173,40 @@ export default function ModalProductUpdate({
                 <p>Ja</p>
                 <input
                   type="checkbox"
-                  checked={reusableValue === 1}
-                  onChange={(event) =>
-                    setReusable(event.target.checked ? "Yes" : "No")
-                  }
+                  checked={reusable}
+                  onChange={(event) => setReusable(event.target.checked)}
                   className="px-2 py-1 border rounded mb-4 ms-2"
                 />
               </div>
+            </div>
+            <div className="mb-4 d-flex flex-column">
+              <p>
+                <strong>Minimale voorraad:</strong>
+              </p>
+              <input
+                type="number"
+                value={minStock}
+                onChange={(event) => setMinStock(Number(event.target.value))}
+                required
+                className="px-2 py-1 border rounded"
+              />
+            </div>
+            <div className="mb-4 d-flex flex-column">
+              <p>
+                <strong>Categorie:</strong>
+              </p>
+              <select
+                value={categoryId}
+                onChange={(event) => setCategoryId(Number(event.target.value))}
+                required
+                className="px-2 py-1 border rounded"
+              >
+                {categories.map((category: any) => (
+                  <option key={category.Id} value={category.Id}>
+                    {category.Name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
           <div className="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
