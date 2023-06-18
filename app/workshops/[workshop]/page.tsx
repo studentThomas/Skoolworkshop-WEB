@@ -113,7 +113,6 @@ export default  function ProductsPage({ params }: any) {
   return (
     <div>
         <Nav />
-        <h1 className='text-center'>{role}</h1>
       <BreadCrumbs breadCrumbs={breadCrumbs} />
 
       <div className="album">
