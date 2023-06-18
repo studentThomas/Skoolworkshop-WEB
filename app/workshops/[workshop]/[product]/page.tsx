@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useReactToPrint } from "react-to-print";
 import { useRouter } from "next/navigation";
 import BreadCrumbs from "@/components/BreadCrumbs";
 import "../../../../css/workshop.css";
@@ -32,13 +33,7 @@ export default function updateProduct({ params }: any) {
   const [quantity, setQuantity] = useState<number>(0);
   const [notification, setNotification] = useState<string>("");
 
-  useEffect(() => {
-    console.log(notification);
-  }, [notification]);
 
-  useEffect(() => {
-    console.log(quantity);
-  }, [quantity]);
 
   useEffect(() => {
     async function fetchData() {
@@ -78,18 +73,35 @@ export default function updateProduct({ params }: any) {
     router.refresh();
   };
   
+  const barcodeRef = useRef<any>(null);
+
+  const handlePrint = useReactToPrint({
+    content: () => barcodeRef.current,
+  });
 
   return (
     <div>
+
       <Nav />
+      {/* <useReactToPrint
+        trigger={()=>{
+           return <button>Print</button>
+        }}
+        content={() => this.componentRef}
+        documentTitle="Barcode"
+        pageStyle = "print"
+      /> */}
+      
       <form onSubmit={create}>
-      <div className="container text-center my-5">
+      <div className="container text-center my-5" >
         <BreadCrumbs breadCrumbs={breadCrumbs} />
         <h1 style={{ color: "orange" }}>Product</h1>
         <div className="my-4 div-style">
 
           <h2>{product.Name}</h2>
-          <Barcode value={product.Code} />
+         
+          <Barcode value={product.Code} ref={barcodeRef}/>
+        
           <p>{product.Description}</p>
           <img
             src={product.Image}
@@ -115,7 +127,8 @@ export default function updateProduct({ params }: any) {
               onChange={handleQuantityChange}
             />
           </div>
-          <button>Voorraad bijwerken</button>
+          <button >Voorraad bijwerken</button>
+          <button onClick={handlePrint}>Print Barcode</button>
           <p>{notification}</p>
         </div>
       </div>

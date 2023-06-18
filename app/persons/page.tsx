@@ -8,99 +8,97 @@ import ModalPersonDelete from '@/components/ModalPersonDelete';
 import ModalPersonUpdate from '@/components/ModalPersonUpdate';
 
 async function getUsers() {
-  const response = await fetch(
-    'https://skoolworkshop.up.railway.app/api/user'
-  );
-  const data = await response.json();
-  const users = data?.data as any[]; // Update the type to match your data structure
-  return users;
-}
+    const response = await fetch(
+        'https://skoolworkshop.up.railway.app/api/user'
+      );
+      const data = await response.json();
+      const users = data?.data as any[]; // Update the type to match your data structure
+      return users;
+    }
+    
+    export default function PersonPage() {
+      const [users, setUsers] = useState<any[]>([]); // Define the type for users
 
-export default function PersonPage() {
-  const [users, setUsers] = useState<any[]>([]); // Define the type for users
+      useEffect(() => {
+        getUsers().then((data) => {
+          setUsers(data);
+        });
+      }, []);
 
-  useEffect(() => {
-    getUsers().then((data) => {
-      setUsers(data);
-    });
-  }, []);
+      const deletePerson = (deletedPerson: any) => {
+        // Define the type for deletedPerson
+        setUsers((prevUsers) =>
+          prevUsers.filter(
+            (user) => user.Id !== deletedPerson.Id
+          )
+        );
+    };
 
-  const deletePerson = (deletedPerson: any) => {
-    // Define the type for deletedPerson
-    setUsers((prevUsers) =>
-      prevUsers.filter(
-        (user) => user.Id !== deletedPerson.Id
-      )
-    );
-  };
-
-  const updatePerson = (updatedPerson: any) => {
-    // Define the type for updatedPerson
-    setUsers((prevUsers) =>
-      prevUsers.map((user) => {
-        if (user.Id === updatedPerson.Id) {
-          return updatedPerson;
-        }
-        return user;
-      })
-    );
-  };
-
-  return (
-    <div>
-      <Nav />
-      <h2 className="text-center p-2">
-        Personen
-      </h2>
-      <div className="container">
-        {users.map((user) => (
-          <User
-            user={user}
-            key={user.Id}
-            deletePerson={deletePerson}
-            updatePerson={updatePerson}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function User({
-  user,
-  deletePerson,
-  updatePerson
-}: {
-  user: any;
-  deletePerson: (deletedPerson: any) => void;
-  updatePerson: (updatedPerson: any) => void;
-}) {
-  // Define the type for user and deletePerson
-  const [showModaldelete, setShowModalDelete] =
-    useState(false);
-  const [showModalupdate, setShowModalUpdate] =
-    useState(false);
-  return (
-    <div>
-      <ModalPersonDelete
-        isVisible={showModaldelete}
-        onClose={() => setShowModalDelete(false)}
-        name={user.FirstName}
-        personId={user.Id}
-        deletePerson={deletePerson}
-      />
-      <ModalPersonUpdate
-        isVisible={showModalupdate}
-        onClose={() => setShowModalUpdate(false)}
-        email={user.EmailAdress}
-        password={user.Password}
-        firstName={user.FirstName}
-        phoneNumber={user.PhoneNumber}
-        role={user.Role}
-        personId={user.Id}
-        updateUser={updatePerson}
-      />
-
+    const updatePerson = (updatedPerson: any) => {
+        // Define the type for updatedPerson
+        setUsers((prevUsers) =>
+          prevUsers.map((user) => {
+            if (user.Id === updatedPerson.Id) {
+              return updatedPerson;
+            }
+            return user;
+          })
+        );
+      };
+    
+      return (
+        <div>
+          <Nav />
+          <h2 className="text-center p-2">
+            Personen
+          </h2>
+          <div className="container">
+            {users.map((user) => (
+              <User
+                user={user}
+                key={user.Id}
+                deletePerson={deletePerson}
+                updatePerson={updatePerson}
+              />
+            ))}
+          </div>
+        </div>
+      );
+    }
+    function User({
+        user,
+        deletePerson,
+        updatePerson
+      }: {
+        user: any;
+        deletePerson: (deletedPerson: any) => void;
+        updatePerson: (updatedPerson: any) => void;
+      }) {
+        // Define the type for user and deletePerson
+        const [showModaldelete, setShowModalDelete] =
+          useState(false);
+        const [showModalupdate, setShowModalUpdate] =
+          useState(false);
+        return (
+          <div>
+            <ModalPersonDelete
+              isVisible={showModaldelete}
+              onClose={() => setShowModalDelete(false)}
+              name={user.FirstName}
+              personId={user.Id}
+              deletePerson={deletePerson}
+            />
+            <ModalPersonUpdate
+              isVisible={showModalupdate}
+              onClose={() => setShowModalUpdate(false)}
+              email={user.EmailAdress}
+              password={user.Password}
+              firstName={user.FirstName}
+              phoneNumber={user.PhoneNumber}
+              role={user.Role}
+              personId={user.Id}
+              updateUser={updatePerson}
+            />
       <div className="list-group p-1">
         <div
           className="list-group-item list-group-item-action d-flex gap-3 py-3"
@@ -151,7 +149,7 @@ function User({
             </div>
           </div>
         </div>
-      </div>
+        </div>
     </div>
   );
-}
+}      
