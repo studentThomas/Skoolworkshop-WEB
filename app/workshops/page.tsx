@@ -8,6 +8,7 @@ import ModalWorkshopDelete from "../../components/ModalWorkshopDelete";
 import ModalWorkshopUpdate from "../../components/ModalWorkshopUpdate";
 import "../../css/workshop.css";
 import LoginPage from "../login/page";
+import { useRouter } from "next/navigation";
 
 async function getWorkshops() {
   const response = await fetch(
@@ -28,10 +29,14 @@ export default  function WorkshopsPage() {
   const [filteredWorkshops, setFilteredWorkshops] = useState<any[]>([]);
   const [role, setRole] = useState<string | null>(null);
 
+  const router = useRouter();
 
   useEffect(() => {
     const storedRole = localStorage.getItem('role'); // Get the role from localStorage
-    setRole(storedRole || null); // Update the role in state with a fallback to null if it's not available
+
+    if(storedRole === 'user') {
+      router.push('/scanner');
+    }
   
     fetchWorkshops();
   }, []);
@@ -55,6 +60,10 @@ export default  function WorkshopsPage() {
     setFilteredWorkshops(filteredWorkshops);
   };
 
+  // if(role !== 'admin') {
+  //   router.push('/forbidden');
+  // }
+  
   const updateWorkshop = (updatedWorkshop: any) => {
     setWorkshops((prevWorkshops) => {
       const updatedWorkshops = prevWorkshops.map((workshop) => {

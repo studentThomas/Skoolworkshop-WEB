@@ -4,7 +4,8 @@ import Nav from "@/components/Nav";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../globals.css";
 import Link from "next/link";
-
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 async function getUsers() {
     const response = await fetch(
@@ -15,10 +16,19 @@ async function getUsers() {
     return users;
   }
 
-
 export default async function PersonPage() {
+    
+    const router = useRouter();
+  
+    useEffect(() => {
+        const storedRole = localStorage.getItem('role'); // Get the role from localStorag
+    
+        if(storedRole != 'admin') {
+          router.push('/forbidden');
+        }
+      }, []);
+    
     const users = await getUsers();
-
     return (
         <div>
             <Nav />
@@ -33,7 +43,6 @@ export default async function PersonPage() {
 }
 
 async function User({ user }: { user: any }) {
-
 
     const handleDeleteClick = () => {
         // Handle delete click logic here
@@ -92,8 +101,3 @@ async function User({ user }: { user: any }) {
         </div>
     );
 }
-
-
-
-
-
