@@ -24,17 +24,47 @@ async function getProduct(productId: string) {
 }
 
 export default function updateProduct({ params }: any) {
+  const [workshopName, setWorkshopName] = useState("");
+  const [productName, setProductName] = useState("");
+
+  useEffect(() => {
+    async function fetchWorkshopDetails() {
+      try {
+        const response = await fetch(`https://skoolworkshop.up.railway.app/api/workshop/${params.workshop}`, { cache: "no-store" });
+        const data = await response.json();
+        const workshopName = data?.data?.Name || "";
+        setWorkshopName(workshopName);
+      } catch (error) {
+        console.error("Error fetching workshop details:", error);
+      }
+    }
+
+    fetchWorkshopDetails();
+  }, [params.workshop]);
+
+  useEffect(() => {
+    async function fetchProductDetails() {
+      try {
+        const product = await getProduct(params.product);
+        setProductName(product?.Name || "");
+      } catch (error) {
+        console.error("Error fetching product details:", error);
+      }
+    }
+
+    fetchProductDetails();
+  }, [params.product]);
+
+
   const breadCrumbs = [
     { name: "Dashboard", url: "/" },
     { name: "Workshops", url: "/workshops" },
-    { name: "Workshop", url: `/workshops/${params.workshop}` },
-    { name: "Product", url: `/workshops/${params.workshop}/${params.product}` },
+    { name: workshopName, url: `/workshops/${params.workshop}` },
+    { name: productName, url: `/workshops/${params.workshop}/${params.product}` },
   ];
   const [product, setProduct] = useState<any>({});
   const [quantity, setQuantity] = useState<number>(0);
   const [notification, setNotification] = useState<string>("");
-
-
 
   useEffect(() => {
     async function fetchData() {
