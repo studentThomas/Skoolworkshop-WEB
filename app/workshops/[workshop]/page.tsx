@@ -19,6 +19,18 @@ async function getProducts(workshopId: string) {
   return products;
 }
 
+async function getCategories() {
+  const response = await fetch(
+    "https://skoolworkshop.up.railway.app/api/categories",
+    { cache: "no-store" }
+  );
+
+  const data = await response.json();
+  const categories = (data?.data as any[]) || [];
+
+  return categories;
+}
+
 function Search({ onSearch }: { onSearch: (value: string) => void }) {
   const [searchValue, setSearchValue] = useState("");
 
@@ -41,21 +53,19 @@ function Search({ onSearch }: { onSearch: (value: string) => void }) {
   );
 }
 
-export default  function ProductsPage({ params }: any) {
+export default function ProductsPage({ params }: any) {
   const [products, setProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
 
-
-  localStorage.setItem('role', 'admin');
-  const role = localStorage.getItem('role');
+  localStorage.setItem("role", "admin");
+  const role = localStorage.getItem("role");
 
   const breadCrumbs = [
     { name: "Home", url: "/" },
     { name: "Workshops", url: "/workshops" },
     { name: "Workshop", url: `/workshops/${params.workshop}` },
   ];
-
-
 
   useEffect(() => {
     async function fetchData() {
@@ -67,11 +77,31 @@ export default  function ProductsPage({ params }: any) {
     fetchData();
   }, [params.workshop]);
 
+  useEffect(() => {
+    async function fetchCategories() {
+      const data = await getCategories();
+      setCategories(data);
+    }
+
+    fetchCategories();
+  }, []);
+
   const handleSearch = (value: string) => {
     const filtered = products.filter((product) =>
       product.Name.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredProducts(filtered);
+  };
+
+  const handleCategoryFilter = (categoryId: number) => {
+    if (categoryId === 0) {
+      setFilteredProducts(products);
+    } else {
+      const filtered = products.filter(
+        (product) => product.CategoryId === categoryId
+      );
+      setFilteredProducts(filtered);
+    }
   };
 
   const updateProduct = (updatedProduct: any) => {
@@ -112,13 +142,30 @@ export default  function ProductsPage({ params }: any) {
 
   return (
     <div>
-        <Nav />
+      <Nav />
       <BreadCrumbs breadCrumbs={breadCrumbs} />
 
       <div className="album">
         <div className="container">
           <Search onSearch={handleSearch} />
 
+          <div className="mt-3 mb-4">
+            <label htmlFor="categoryFilter" className="form-label">
+              Filter op categorie:
+            </label>
+            <select
+              id="categoryFilter"
+              className="form-select"
+              onChange={(e) => handleCategoryFilter(Number(e.target.value))}
+            >
+              <option value="0">Alle</option>
+              {categories.map((category) => (
+                <option key={category.Id} value={category.Id}>
+                  {category.Name}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {filteredProducts.map((product) => (
               <div className="col" key={product.Id}>
@@ -131,6 +178,7 @@ export default  function ProductsPage({ params }: any) {
               </div>
             ))}
           </div>
+
         </div>
       </div>
     </div>
@@ -175,9 +223,17 @@ function Product({ product, params, deleteProduct, updateProduct }: any) {
         productId={Id}
         updateProduct={updateProduct}
       />
-      <div className={`card shadow-sm border-3 border-red-500 ${Quantity <= 0 ? "border-danger" : ""}`}>
+      <div
+        className={`card shadow-sm border-3 border-red-500 ${
+          Quantity <= 0 ? "border-danger" : ""
+        }`}
+      >
         <Link href={`/workshops/${workshopId}/${Id}`}>
-          <img src={Image} className="card-img-top product-image" alt={Name} />
+          <img
+            src={Image}
+            className="card-img-top product-image"
+            alt={Name}
+          />
         </Link>
         <div className="card-body d-flex flex-column">
           <h5 className="card-title mb-auto">{Name}</h5>
@@ -190,7 +246,9 @@ function Product({ product, params, deleteProduct, updateProduct }: any) {
                 Update
               </button>
             </div>
-            <h5 className={`text-end ${Quantity <= 0 ? "text-danger" : ""}`}>{Quantity}</h5>
+            <h5 className={`text-end ${Quantity <= 0 ? "text-danger" : ""}`}>
+              {Quantity}
+            </h5>
             <div className="d-flex justify-content-end">
               <button
                 onClick={() => setShowModal(true)}
