@@ -70,8 +70,7 @@ function ProductForm({ onProductCreated }) {
       }
     }
 
-   
-
+  
     // Validate Workshop ID
     const workshopIdNumber = parseInt(workshopId, 10);
     if (
@@ -82,8 +81,6 @@ function ProductForm({ onProductCreated }) {
       setAddMessage("Workshop ID moet een nummer tussen 1 en 31 zijn");
       return;
     }
-
-    const reusableValue = reusable === "Yes" ? 1 : 0;
 
     try {
       const response = await fetch(
@@ -101,7 +98,7 @@ function ProductForm({ onProductCreated }) {
             quantity,
             workshopId: workshopIdNumber,
             participantMultiplier,
-            reusable: reusableValue,
+            reusable: Number(reusable),
             categoryId,
           }),
         }

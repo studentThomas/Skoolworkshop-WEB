@@ -1,4 +1,5 @@
 'use client';
+import '../../css/notification.css'
 
 import React, { useState, useEffect } from 'react';
 
@@ -42,26 +43,6 @@ export default function NotificationPage() {
           </div>
         ))
       )}
-      <style>
-        {`
-        .notification-container {
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          padding: 10px;
-          margin-bottom: 10px;
-        }
-        .notification-title {
-          font-size: 24px;
-          text-align: left;
-        }
-        .notification-message {
-          text-align: left;
-        }
-        .notification-date {
-          text-align: left;
-        }
-        `}
-      </style>
     </div>
   );
   
