@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "../../css/Color.css"
 
 async function login(email: any, password: any) {
   try {
@@ -95,7 +96,7 @@ export default function LoginPage() {
           <input className="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault" />
           <label className="form-check-label">Remember me</label>
         </div>
-        <button className="btn btn-warning w-100 py-2" type="button" onClick={handleLogin}>
+        <button className="btn btn-color w-100 py-2" type="button" onClick={handleLogin}>
           Login
         </button>
 

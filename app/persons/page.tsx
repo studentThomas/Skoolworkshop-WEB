@@ -6,6 +6,7 @@ import React, {
 import Nav from '@/components/Nav';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../globals.css';
+import '../../css/Color.css';
 import Link from 'next/link';
 import ModalPersonDelete from '@/components/ModalPersonDelete';
 import ModalPersonUpdate from '@/components/ModalPersonUpdate';
@@ -104,7 +105,7 @@ export default function PersonPage() {
           />
         ))}
         <button
-          className="btn btn-warning m-1"
+          className="btn btn-color m-1"
           onClick={() => setShowModalAdd(true)}
         >
           Toevoegen
@@ -168,7 +169,7 @@ function User({
                 <h6 className="mb-0 me-2">
                   {user.FirstName}
                 </h6>
-                <small className="text-nowrap text-warning">
+                <small className="text-nowrap btn-color2">
                   {user.Role}
                 </small>
               </div>
@@ -198,7 +199,7 @@ function User({
                 width="20"
                 height="20"
                 fill="currentColor"
-                className="bi bi-pencil text-warning"
+                className="bi bi-pencil btn-color2"
                 viewBox="0 0 16 16"
                 onClick={() =>
                   setShowModalUpdate(true)

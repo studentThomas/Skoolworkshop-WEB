@@ -4,6 +4,7 @@ import Link from "next/link";
 import BreadCrumbs from "../../../components/BreadCrumbs";
 import ModalProductDelete from "../../../components/ModalProductDelete";
 import "../../../css/workshop.css";
+import "../../../css/Color.css";
 import ModalProductUpdate from "@/components/ModalProductUpdate";
 import Nav from "@/components/Nav";
 
@@ -244,7 +245,7 @@ function Product({ product, params, deleteProduct, updateProduct }: any) {
               width="20"
               height="20"
               fill="currentColor"
-              className="bi bi-pencil text-warning"
+              className="bi bi-pencil btn-color2"
               viewBox="0 0 16 16"
               onClick={() => setShowModalUpdate(true)}
             >
