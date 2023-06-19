@@ -10,6 +10,7 @@ import Link from 'next/link';
 import ModalPersonDelete from '@/components/ModalPersonDelete';
 import ModalPersonUpdate from '@/components/ModalPersonUpdate';
 import ModalPersonAdd from '@/components/ModalAddPerson';
+import { useRouter } from "next/navigation";
 
 async function getUsers() {
   const response = await fetch(
@@ -21,7 +22,25 @@ async function getUsers() {
 }
 
 export default function PersonPage() {
+    const router = useRouter();
   const [users, setUsers] = useState<any[]>([]); // Define the type for users
+
+
+
+
+ 
+
+  useEffect(() => {
+
+    const storedRole = localStorage.getItem('role'); // Get the role from localStorage
+
+    if(storedRole != 'admin') {
+      router.push('/forbidden');
+    }
+  
+  }, []);
+
+
   const [showModalAdd, setShowModalAdd] =
     useState(false);
 
