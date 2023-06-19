@@ -19,7 +19,7 @@ async function getWorkshops() {
 }
 
 const breadCrumbs = [
-  { name: "Home", url: "/" },
+  { name: "Dashboard", url: "/" },
   { name: "Workshops", url: "/workshops" },
 ];
 

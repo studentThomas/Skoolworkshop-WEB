@@ -42,7 +42,7 @@ export default function ProfilePage() {
       {userProfile ? (
         <div className="container">
           <p>
-            <strong>Email:</strong> {userProfile.EmailAdress}
+            <strong>E-mailadres:</strong> {userProfile.EmailAdress}
           </p>
           <p>
             <strong>Naam:</strong> {userProfile.FirstName}
@@ -51,7 +51,7 @@ export default function ProfilePage() {
             <strong>Telefoonnummer:</strong> {userProfile.PhoneNumber}
           </p>
           <p>
-            <strong>Rool:</strong> {userProfile.Role}
+            <strong>Rol:</strong> {userProfile.Role}
           </p>
         </div>
       ) : (

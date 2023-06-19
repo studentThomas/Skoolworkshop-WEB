@@ -76,7 +76,7 @@ export default function LoginPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <label>Email address</label>
+          <label>E-mailadres</label>
         </div>
         <div className="form-floating">
           <input
@@ -88,7 +88,7 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <label>Password</label>
+          <label>Wachtwoord</label>
         </div>
 
         <div className="form-check text-start my-3">
