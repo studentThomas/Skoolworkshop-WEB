@@ -24,7 +24,7 @@ async function getProduct(productId: string) {
 
 export default function updateProduct({ params }: any) {
   const breadCrumbs = [
-    { name: "Home", url: "/" },
+    { name: "Dashboard", url: "/" },
     { name: "Workshops", url: "/workshops" },
     { name: "Workshop", url: `/workshops/${params.workshop}` },
     { name: "Product", url: `/workshops/${params.workshop}/${params.product}` },

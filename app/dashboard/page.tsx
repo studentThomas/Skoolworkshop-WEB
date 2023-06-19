@@ -31,9 +31,9 @@ export default function NotificationPage() {
 
   return (
     <div className="container text-center my-5">
-      <h1>Notifications</h1>
+      <h1>Notificaties</h1>
       {notifications.length === 0 ? (
-        <p>There are no notifications.</p>
+        <p>Er zijn geen notificaties.</p>
       ) : (
         notifications.map((notification) => (
           <div key={notification.id} className="notification-container">

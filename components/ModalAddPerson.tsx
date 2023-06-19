@@ -70,7 +70,7 @@ export default function ModalUserAdd({
       <div className="modal-dialog" ref={modalRef}>
         <div className="modal-content rounded-4 shadow" style={{ width: "400px" }}>
           <div className="modal-header border-bottom-0">
-            <h1 className="modal-title fs-5">Add User</h1>
+            <h1 className="modal-title fs-5">Gebruiker toevoegen</h1>
             <button
               type="button"
               className="btn-close"
@@ -82,7 +82,7 @@ export default function ModalUserAdd({
           <div className="modal-body py-0">
             <div className="mb-4 d-flex flex-column">
               <p>
-                <strong>Email Address:</strong>
+                <strong>E-mailadres:</strong>
               </p>
               <input
                 type="email"
@@ -94,7 +94,7 @@ export default function ModalUserAdd({
             </div>
             <div className="mb-4 d-flex flex-column">
               <p>
-                <strong>Password:</strong>
+                <strong>Wachtwoord:</strong>
               </p>
               <input
                 type="password"
@@ -106,7 +106,7 @@ export default function ModalUserAdd({
             </div>
             <div className="mb-4 d-flex flex-column">
               <p>
-                <strong>First Name:</strong>
+                <strong>Naam:</strong>
               </p>
               <input
                 type="text"
@@ -118,7 +118,7 @@ export default function ModalUserAdd({
             </div>
             <div className="mb-4 d-flex flex-column">
               <p>
-                <strong>Phone Number:</strong>
+                <strong>Telefoonnummer:</strong>
               </p>
               <input
                 type="text"
@@ -130,7 +130,7 @@ export default function ModalUserAdd({
             </div>
             <div className="mb-4 d-flex flex-column">
               <p>
-                <strong>Role:</strong>
+                <strong>Rol:</strong>
               </p>
               <input
                 type="text"
@@ -147,7 +147,7 @@ export default function ModalUserAdd({
               className="btn btn-lg btn-warning"
               onClick={handleAddUser}
             >
-              Add User
+              Toevoegen
             </button>
             <button
               type="button"
@@ -155,7 +155,7 @@ export default function ModalUserAdd({
               data-bs-dismiss="modal"
               onClick={onClose}
             >
-              Close
+              Sluiten
             </button>
           </div>
         </div>

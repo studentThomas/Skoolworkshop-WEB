@@ -91,7 +91,7 @@ export default function PersonPage() {
     <div>
       <Nav />
       <h2 className="text-center p-2">
-        Personen
+        Gebruikers
       </h2>
       <div className="container">
         {users.map((user, index) => (
