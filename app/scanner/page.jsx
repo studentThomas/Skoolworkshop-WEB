@@ -65,13 +65,13 @@ async function getProducts(barcode) {
   return (
     <div className="App">
       <Nav />
-      <h1>Scanner</h1>
       {scanResult ? (
         <div>
           Succes: <a href={'http://' + scanResult}>{scanResult}</a>
         </div>
       ) : (
-        <div id="reader"></div>
+        <div id="reader" ></div>
+
       )}
     </div>
   );

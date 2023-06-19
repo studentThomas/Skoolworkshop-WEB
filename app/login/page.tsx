@@ -20,8 +20,9 @@ async function login(email: any, password: any) {
 
     if (response.ok && response.status === 200) {
       // Login successful
-      const { Role } = data.data; // Assuming the role information is provided in the response as "Role"
+      const { Role, EmailAdress } = data.data; // Assuming the role information is provided in the response as "Role"
       localStorage.setItem('role', Role); // Store the role in localStorage
+      localStorage.setItem('email', EmailAdress); // Store the email in localStorage
       console.log('Login successful');
     } else {
       // Login failed
@@ -75,7 +76,7 @@ export default function LoginPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <label>Email address</label>
+          <label>E-mailadres</label>
         </div>
         <div className="form-floating">
           <input
@@ -87,7 +88,7 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <label>Password</label>
+          <label>Wachtwoord</label>
         </div>
 
         <div className="form-check text-start my-3">
@@ -95,7 +96,7 @@ export default function LoginPage() {
           <label className="form-check-label">Remember me</label>
         </div>
         <button className="btn btn-warning w-100 py-2" type="button" onClick={handleLogin}>
-          Sign in
+          Login
         </button>
 
         {error && <p className="text-danger mt-3">{error}</p>}

@@ -7,7 +7,7 @@ import Link from "next/link";
 import ModalWorkshopDelete from "../../components/ModalWorkshopDelete";
 import ModalWorkshopUpdate from "../../components/ModalWorkshopUpdate";
 import "../../css/workshop.css";
-import LoginPage from "../login/page";
+import { useRouter } from "next/navigation";
 
 async function getWorkshops() {
   const response = await fetch(
@@ -19,7 +19,7 @@ async function getWorkshops() {
 }
 
 const breadCrumbs = [
-  { name: "Home", url: "/" },
+  { name: "Dashboard", url: "/" },
   { name: "Workshops", url: "/workshops" },
 ];
 
@@ -28,10 +28,14 @@ export default  function WorkshopsPage() {
   const [filteredWorkshops, setFilteredWorkshops] = useState<any[]>([]);
   const [role, setRole] = useState<string | null>(null);
 
+  const router = useRouter();
 
   useEffect(() => {
     const storedRole = localStorage.getItem('role'); // Get the role from localStorage
-    setRole(storedRole || null); // Update the role in state with a fallback to null if it's not available
+
+    if(storedRole === 'user') {
+      router.push('/scanner');
+    }
   
     fetchWorkshops();
   }, []);
@@ -55,6 +59,10 @@ export default  function WorkshopsPage() {
     setFilteredWorkshops(filteredWorkshops);
   };
 
+  // if(role !== 'admin') {
+  //   router.push('/forbidden');
+  // }
+  
   const updateWorkshop = (updatedWorkshop: any) => {
     setWorkshops((prevWorkshops) => {
       const updatedWorkshops = prevWorkshops.map((workshop) => {
@@ -162,19 +170,35 @@ function WorkshopCard({ workshop, updateWorkshop, deleteWorkshop }: any) {
         <div className="card-body">
           <h5 className="card-title">{Name}</h5>
           <p className="card-text">{CategoryName}</p>
-          <div className="d-flex justify-content-between align-items-center">
-            <button
-              onClick={() => setShowModalProduct(true)}
-              className="btn btn-sm btn-outline-secondary"
-            >
-              Aanpassen
-            </button>
-            <button
-              onClick={() => setShowModal(true)}
-              className="btn btn-sm btn-outline-secondary"
-            >
-              Verwijder
-            </button>
+          <div className="">
+          <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="currentColor"
+                className="bi bi-pencil text-warning"
+                viewBox="0 0 16 16"
+                onClick={() =>
+                  setShowModalProduct(true)
+                }
+              >
+                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+              </svg>
+          <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  className="bi bi-trash text-danger mx-2"
+                  viewBox="0 0 16 16"
+                  onClick={() =>
+                    setShowModal(true)
+                  }
+                >
+                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                </svg>
+      
           </div>
         </div>
       </div>

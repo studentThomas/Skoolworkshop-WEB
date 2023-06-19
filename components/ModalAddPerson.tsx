@@ -1,17 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
+import "../css/Modal.css";
 
-export default function ModalWorkshopUpdate({
+export default function ModalUserAdd({
   isVisible,
   onClose,
-  name: initialName,
-  categoryName: initialCategoryName,
-  image: initialImage,
-  workshopId,
-  updateWorkshop,
+  AddUser,
 }: any) {
-  const [name, setName] = useState(initialName);
-  const [categoryName, setCategoryName] = useState(initialCategoryName);
-  const [image, setImage] = useState(initialImage);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [role, setRole] = useState("");
   const modalRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -32,31 +31,35 @@ export default function ModalWorkshopUpdate({
 
   if (!isVisible) return null;
 
-  const handleUpdateWorkshop = async () => {
+  const handleAddUser = async () => {
     try {
-      const response = await fetch(
-        `https://skoolworkshop.up.railway.app/api/workshop/${workshopId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name, categoryName, image }),
-        }
-      );
+      const response = await fetch("https://skoolworkshop.up.railway.app/api/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          emailAdress: email,
+          password,
+          firstName,
+          phoneNumber,
+          role,
+        }),
+      });
 
-      if (!response.ok) {
+      if (response.ok) {
+        const addedUser = {
+          emailAdress: email,
+          password,
+          firstName,
+          phoneNumber,
+          role,
+        };
+        AddUser(addedUser);
+        onClose();
+      } else {
         throw new Error("Something went wrong");
       }
-
-      const updatedWorkshop = {
-        Id: workshopId,
-        Name: name,
-        Image: image,
-        CategoryName: categoryName,
-      };
-      updateWorkshop(updatedWorkshop);
-      onClose();
     } catch (error) {
       console.error(error);
     }
@@ -67,7 +70,7 @@ export default function ModalWorkshopUpdate({
       <div className="modal-dialog" ref={modalRef}>
         <div className="modal-content rounded-4 shadow" style={{ width: "400px" }}>
           <div className="modal-header border-bottom-0">
-            <h1 className="modal-title fs-5">{name}</h1>
+            <h1 className="modal-title fs-5">Gebruiker toevoegen</h1>
             <button
               type="button"
               className="btn-close"
@@ -79,36 +82,60 @@ export default function ModalWorkshopUpdate({
           <div className="modal-body py-0">
             <div className="mb-4 d-flex flex-column">
               <p>
+                <strong>E-mailadres:</strong>
+              </p>
+              <input
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                required
+                className="px-2 py-1 border rounded"
+              />
+            </div>
+            <div className="mb-4 d-flex flex-column">
+              <p>
+                <strong>Wachtwoord:</strong>
+              </p>
+              <input
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                required
+                className="px-2 py-1 border rounded"
+              />
+            </div>
+            <div className="mb-4 d-flex flex-column">
+              <p>
                 <strong>Naam:</strong>
               </p>
               <input
                 type="text"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
+                value={firstName}
+                onChange={(event) => setFirstName(event.target.value)}
                 required
                 className="px-2 py-1 border rounded"
               />
             </div>
             <div className="mb-4 d-flex flex-column">
               <p>
-                <strong>Categorie:</strong>
+                <strong>Telefoonnummer:</strong>
               </p>
               <input
                 type="text"
-                value={categoryName}
-                onChange={(event) => setCategoryName(event.target.value)}
+                value={phoneNumber}
+                onChange={(event) => setPhoneNumber(event.target.value)}
                 required
                 className="px-2 py-1 border rounded"
               />
             </div>
             <div className="mb-4 d-flex flex-column">
               <p>
-                <strong>URL van afbeelding:</strong>
+                <strong>Rol:</strong>
               </p>
               <input
                 type="text"
-                value={image}
-                onChange={(event) => setImage(event.target.value)}
+                value={role}
+                onChange={(event) => setRole(event.target.value)}
                 required
                 className="px-2 py-1 border rounded"
               />
@@ -118,9 +145,9 @@ export default function ModalWorkshopUpdate({
             <button
               type="button"
               className="btn btn-lg btn-warning"
-              onClick={handleUpdateWorkshop}
+              onClick={handleAddUser}
             >
-              Opslaan
+              Toevoegen
             </button>
             <button
               type="button"
