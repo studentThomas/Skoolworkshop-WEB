@@ -23,6 +23,16 @@ export default function ModalProductUpdate({
   const [minStock, setMinStock] = useState(initialMinStock);
   const modalRef = useRef<HTMLDivElement | null>(null);
 
+  let number = code;
+
+
+    if(code === '') {
+      for (let i = 0; i < 13; i++) {
+        const randomNumber = Math.floor(Math.random() * 9) + 1;
+        number += randomNumber.toString();
+      }
+    }
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -146,10 +156,9 @@ export default function ModalProductUpdate({
                 <strong>Code:</strong>
               </p>
               <input
-                type="number"
+                type="text"
                 value={code}
-                onChange={(event) => setCode(Number(event.target.value))}
-                required
+                onChange={(event) => setCode((event.target.value))}
                 className="px-2 py-1 border rounded"
               />
             </div>

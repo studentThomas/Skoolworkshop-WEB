@@ -141,7 +141,6 @@ function Product({ product, params, deleteProduct, updateProduct }: any) {
   const {
     Id,
     Name,
-    CategoryId,
     Description,
     Code,
     Quantity,
