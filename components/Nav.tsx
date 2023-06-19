@@ -50,17 +50,17 @@ export default function Nav() {
               aria-expanded="false"
               id="dropdown-basic"
             >
-              Profile
+              Profiel
             </Dropdown.Toggle>
 
             <Dropdown.Menu className="dropdown-menu text-small">
               <Dropdown.Item href="/addProduct">Nieuw product</Dropdown.Item>
               <Dropdown.Item href="#">Nieuw workshop</Dropdown.Item>
               <Dropdown.Divider /> {/* Divider */}
-              <Dropdown.Item href="/persons">Personen</Dropdown.Item>
+              <Dropdown.Item href="/persons">Gebruikers</Dropdown.Item>
               <Dropdown.Item href="/profile">Profiel</Dropdown.Item>
               <Dropdown.Divider /> {/* Divider */}
-              <Dropdown.Item href="/login">Sign out</Dropdown.Item>
+              <Dropdown.Item href="/login">Uitloggen</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>

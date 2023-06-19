@@ -162,7 +162,7 @@ function ProductForm({ onProductCreated }) {
               />
             </label>
             <label className="flex flex-col mb-4">
-              URL van plaatje:
+              URL van afbeelding:
               <input
                 type="text"
                 value={image}

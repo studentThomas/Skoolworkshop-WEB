@@ -155,7 +155,7 @@ export default function ModalProductUpdate({
             </div>
             <div className="mb-4 d-flex flex-column">
               <p>
-                <strong>URL plaatje:</strong>
+                <strong>URL van afbeelding:</strong>
               </p>
               <input
                 type="text"

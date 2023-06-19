@@ -50,7 +50,7 @@ export default  function ProductsPage({ params }: any) {
   const role = localStorage.getItem('role');
 
   const breadCrumbs = [
-    { name: "Home", url: "/" },
+    { name: "Dashboard", url: "/" },
     { name: "Workshops", url: "/workshops" },
     { name: "Workshop", url: `/workshops/${params.workshop}` },
   ];
