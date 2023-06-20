@@ -1,9 +1,9 @@
-"use client";
+"use client"
+
 import React, { useEffect, useState,  } from 'react';
 import { useRouter } from "next/navigation";
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import Nav from '@/components/Nav';
-
 
 
 async function getProducts(barcode) {
@@ -12,11 +12,12 @@ async function getProducts(barcode) {
     { cache: "no-store" }
   );
 
+  let result = null;
+
   const data = await response.json();
   const products = data.data;
-  let result = 1234;
   for(const product of products) {
-    if(product.Code === result) {
+    if(product.Code == barcode) {
       result = product.Id;
     }
   }
@@ -24,10 +25,9 @@ async function getProducts(barcode) {
   return result;
 }
 
- function Scanner() {
+function Scanner() {
   const [scanResult, setScanResult] = useState(null);
   const router = useRouter();
-
 
   useEffect(() => {
     const scanner = new Html5QrcodeScanner('reader', {
@@ -40,27 +40,20 @@ async function getProducts(barcode) {
 
     scanner.render(succes, error);
 
-
-
-    console.log('This is a log message');
-  
-
-
     async function succes(result) {
       scanner.clear();
     
-      const id = await getProducts();
+      const id = await getProducts(result);
       router.push('/scanner/' + id);
       setScanResult(id);
     }
+
 
     function error(err) {
       console.log(err);
     }
 
   }, []);
-
-
 
   return (
     <div className="App">
@@ -70,8 +63,7 @@ async function getProducts(barcode) {
           Succes: <a href={'http://' + scanResult}>{scanResult}</a>
         </div>
       ) : (
-        <div id="reader" ></div>
-
+        <div id="reader"></div>
       )}
     </div>
   );
