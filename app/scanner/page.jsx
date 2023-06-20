@@ -8,7 +8,7 @@ import Nav from '@/components/Nav';
 
 async function getProducts(barcode) {
   const response = await fetch(
-    `https://skoolworkshop.up.railway.app/api/product`,
+    "https://skoolworkshop.up.railway.app/api/product",
     { cache: "no-store" }
   );
 
@@ -32,8 +32,8 @@ function Scanner() {
   useEffect(() => {
     const scanner = new Html5QrcodeScanner('reader', {
       qrbox: {
-        width: 250,
-        height: 250,
+        width: 500,
+        height: 500,
       },
       fps: 5,
     });
@@ -42,7 +42,7 @@ function Scanner() {
 
     async function succes(result) {
       scanner.clear();
-    
+
       const id = await getProducts(result);
       router.push('/scanner/' + id);
       setScanResult(id);
@@ -60,7 +60,6 @@ function Scanner() {
       <Nav />
       {scanResult ? (
         <div>
-          Succes: <a href={'http://' + scanResult}>{scanResult}</a>
         </div>
       ) : (
         <div id="reader"></div>
