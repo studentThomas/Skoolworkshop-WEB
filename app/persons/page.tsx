@@ -35,7 +35,7 @@ export default function PersonPage() {
 
     const storedRole = localStorage.getItem('role'); // Get the role from localStorage
 
-    if(storedRole != 'admin') {
+    if(storedRole != 'Admin') {
       router.push('/forbidden');
     }
   

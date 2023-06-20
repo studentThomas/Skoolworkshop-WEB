@@ -34,7 +34,7 @@ export default  function WorkshopsPage() {
   useEffect(() => {
     const storedRole = localStorage.getItem('role'); // Get the role from localStorage
 
-    if(storedRole === 'user') {
+    if(storedRole === 'Gebruiker') {
       router.push('/scanner');
     }
   

@@ -6,6 +6,7 @@ import BreadCrumbs from "@/components/BreadCrumbs";
 import Nav from "@/components/Nav";
 import "../../../css/workshop.css";
 import { updateQuantity } from "../../../components/UpdateQuantity";
+import Barcode from "react-barcode";
 
 async function getProduct(productId: string) {
   const response = await fetch(
@@ -28,6 +29,20 @@ export default function updateProduct({ params }: any) {
   const [product, setProduct] = useState<any>({});
   const [quantity, setQuantity] = useState<number>(0);
   const [notification, setNotification] = useState<string>("");
+  const [tempQuantity, setTempQuantity] =
+    useState<number>(0);
+
+  const handleDecrease = () => {
+    setTempQuantity(
+      (prevQuantity) => prevQuantity - 1
+    );
+  };
+
+  const handleIncrease = () => {
+    setTempQuantity(
+      (prevQuantity) => prevQuantity + 1
+    );
+  };
 
   useEffect(() => {
     console.log(notification);
@@ -46,11 +61,6 @@ export default function updateProduct({ params }: any) {
 
     fetchData();
   }, [params.product]);
-
-  const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newQuantity = parseInt(event.target.value, 10);
-    setQuantity(newQuantity);
-  };
 
   const router = useRouter();
 
@@ -85,33 +95,34 @@ export default function updateProduct({ params }: any) {
       <h1 style={{ color: "orange" }}>Product</h1>
       <div className="my-4 div-style">
         <h2>{product.Name}</h2>
+        <Barcode value={product.Code} />
         <p>{product.Description}</p>
-        <p style={{ color: "gray" }}>Code: {product.Code}</p>
+     
         <img
           src={product.Image}
-          alt="Product Image"
+          alt={product.Name}
           className="product-detailimage"
         />
         <p>Herbruikbaar: {product.Reusable ? "Ja" : "Nee"}</p>
         <p>Voorraad: {product.Quantity}</p>
         <div className="input-container">
-          <input
-            type="range"
-            min="-50"
-            max="50"
-            value={quantity}
-            onChange={handleQuantityChange}
-          />
-          <div className="input-space" />
-          <input
-            type="number"
-            min="-50"
-            max="50"
-            value={quantity}
-            onChange={handleQuantityChange}
-          />
-        </div>
-        <button>Voorraad bijwerken</button>
+              <button
+                type="button"
+                onClick={handleDecrease}
+                className="button-quantity"
+              >
+                -
+              </button>
+              <span>{tempQuantity}</span>
+              <button
+                type="button"
+                onClick={handleIncrease}
+                className="button-quantity"
+              >
+                +
+              </button>
+            </div>
+        <button className="button-quantity">Voorraad bijwerken</button>
         <p>{notification}</p>
       </div>
     </div>

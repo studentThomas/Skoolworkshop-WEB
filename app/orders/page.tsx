@@ -1,10 +1,9 @@
 "use client";
 
-import { log } from 'console';
 import Link from 'next/link';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import "../globals.css";
 import Nav from '@/components/Nav';
 
@@ -65,7 +64,7 @@ export default async function OrdersPage() {
   useEffect(() => {
     const storedRole = localStorage.getItem('role'); // Get the role from localStorag
 
-    if(storedRole == 'user') {
+    if(storedRole == 'Gebruiker') {
       router.push('/forbidden');
     }
 
@@ -88,9 +87,9 @@ export default async function OrdersPage() {
 
     return (
 
-      <div className="album p-3 ">
+      <div className="album p-3">
               <Nav/>
-        <div className="container">
+        <div className="container order">
           <div className="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-3">
             {orders.map((order) => (
               <OrderCard order={order} key={order.OrderWorkshopId} />
@@ -154,10 +153,4 @@ async function ProductItem({ product, workshopId }: { product: any, workshopId: 
 
             );
     }
-  
-  
-  
-
-
-
   
