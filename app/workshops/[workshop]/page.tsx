@@ -75,9 +75,6 @@ export default function ProductsPage({ params }: any) {
     fetchWorkshopDetails();
   }, [params.workshop]);
 
-  localStorage.setItem("role", "admin");
-  const role = localStorage.getItem("role");
-
   const breadCrumbs = [
     { name: "Dashboard", url: "/" },
     { name: "Workshops", url: "/workshops" },

@@ -48,7 +48,6 @@ export default function Nav() {
             <NavDropdown.Item href="/addProduct">
               Nieuw product
             </NavDropdown.Item>
-            <NavDropdown.Item href="#">Nieuw workshop</NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item href="/persons">Gebruikers</NavDropdown.Item>
             <NavDropdown.Item href="/profile">Profiel</NavDropdown.Item>

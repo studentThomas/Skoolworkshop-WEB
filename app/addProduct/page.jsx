@@ -16,7 +16,7 @@ function AddProductPage() {
 
     const storedRole = localStorage.getItem('role'); // Get the role from localStorage
 
-    if(storedRole === 'user') {
+    if(storedRole === 'Gebruiker') {
       router.push('/forbidden');
     }
   
