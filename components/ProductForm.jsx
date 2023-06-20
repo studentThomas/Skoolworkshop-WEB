@@ -9,6 +9,7 @@ function ProductForm({ onProductCreated }) {
   const [image, setImage] = useState("");
   const [code, setCode] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [minStock, setminStock] = useState("");
   const [workshopId, setWorkshopId] = useState("");
   const [participantMultiplier, setParticipantMultiplier] = useState("");
   const [reusable, setReusable] = useState(false);
@@ -96,6 +97,7 @@ function ProductForm({ onProductCreated }) {
             image,
             code: number,
             quantity,
+            minStock,
             workshopId: workshopIdNumber,
             participantMultiplier,
             reusable: Number(reusable),
@@ -113,6 +115,7 @@ function ProductForm({ onProductCreated }) {
         setImage("");
         setCode("");
         setQuantity("");
+        setminStock("");
         setWorkshopId("");
         setParticipantMultiplier("");
         setReusable(false);
@@ -188,6 +191,16 @@ function ProductForm({ onProductCreated }) {
               />
             </label>
             <label className="flex flex-col mb-4">
+              Minimale Voorraad:
+              <input
+                type="number"
+                value={minStock}
+                onChange={(event) => setminStock(event.target.value)}
+                required
+                className="px-2 py-1 border rounded"
+              />
+            </label>
+            <label className="flex flex-col mb-4">
               Workshop:
               <select
                 value={workshopId}
@@ -222,7 +235,7 @@ function ProductForm({ onProductCreated }) {
                 value={categoryId}
                 onChange={(event) => setCategoryId(event.target.value)}
                 required
-                className="px-2 py-1 border rounded"
+                className="px-2 py-1 border rounded select-dropdown"
               >
                 <option value="">Selecteer een categorie</option>
                 {categories.map((category) => (

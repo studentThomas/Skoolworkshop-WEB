@@ -4,7 +4,7 @@ import Link from "next/link";
 import BreadCrumbs from "../../../components/BreadCrumbs";
 import ModalProductDelete from "../../../components/ModalProductDelete";
 import "../../../css/workshop.css";
-import "../../../css/Color.css";
+import "../../../css/Colors.css";
 import ModalProductUpdate from "@/components/ModalProductUpdate";
 import Nav from "@/components/Nav";
 
@@ -206,13 +206,12 @@ function Product({ product, params, deleteProduct, updateProduct }: any) {
   const {
     Id,
     Name,
-    CategoryId,
     Description,
     Code,
     Quantity,
     Image,
     Reusable,
-    MinStock,
+    minStock,
   } = product;
   const workshopId = params.workshop;
   const [showModal, setShowModal] = useState(false);
@@ -236,7 +235,7 @@ function Product({ product, params, deleteProduct, updateProduct }: any) {
         code={Code}
         image={Image}
         reusable={Reusable}
-        minStock={MinStock}
+        minStock={minStock}
         productId={Id}
         updateProduct={updateProduct}
       />
