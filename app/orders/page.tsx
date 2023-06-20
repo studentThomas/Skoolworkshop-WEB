@@ -18,14 +18,14 @@ async function getOrders() {
 }
 
 async function getProduct(productId : string) {
-    const response = await fetch(`https://skoolworkshop.up.railway.app/api/product/${productId}`);
+    const response = await fetch(`http://127.0.0.1:3000/api/product/${productId}`);
     const data = await response.json();
     const product = data.data;
     return product;
 }
 
 async function getWorkshop(workshopId : string) {
-    const response = await fetch(`https://skoolworkshop.up.railway.app/api/workshop/${workshopId}`);
+    const response = await fetch(`http://127.0.0.1:3000/api/workshop/${workshopId}`);
     const data = await response.json();
     const workshop = data.data;
     return workshop;
@@ -78,8 +78,8 @@ export default async function OrdersPage() {
           for (const product of order.products) {
             const productId = product.ProductId;
             const quantity = product.Quantity;
-            await updateStatus(order.OrderWorkshopId);
-            await updateQuantity(productId, quantity);
+            // await updateStatus(order.OrderWorkshopId);
+            // await updateQuantity(productId, quantity);
         
           }
         }
