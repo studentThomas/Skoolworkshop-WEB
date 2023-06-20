@@ -155,9 +155,3 @@ async function ProductItem({ product, workshopId }: { product: any, workshopId: 
             );
     }
   
-  
-  
-
-
-
-  
