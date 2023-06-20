@@ -1,16 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
-import "../css/Modal.css";
+import React, { useEffect, useRef, useState } from 'react';
+import '../css/Modal.css';
+import '../css/Color.css';
 
 export default function ModalUserAdd({
   isVisible,
   onClose,
-  AddUser,
+  AddUser
 }: any) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [role, setRole] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [selectedRole, setSelectedRole] = useState('');
   const modalRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -21,11 +22,11 @@ export default function ModalUserAdd({
     };
 
     if (isVisible) {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener('mousedown', handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isVisible, onClose]);
 
@@ -33,18 +34,18 @@ export default function ModalUserAdd({
 
   const handleAddUser = async () => {
     try {
-      const response = await fetch("https://skoolworkshop.up.railway.app/api/user", {
-        method: "POST",
+      const response = await fetch('https://skoolworkshop.up.railway.app/api/user', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           emailAdress: email,
           password,
           firstName,
           phoneNumber,
-          role,
-        }),
+          role: selectedRole
+        })
       });
 
       if (response.ok) {
@@ -53,22 +54,24 @@ export default function ModalUserAdd({
           password,
           firstName,
           phoneNumber,
-          role,
+          role: selectedRole
         };
         AddUser(addedUser);
         onClose();
       } else {
-        throw new Error("Something went wrong");
+        throw new Error('Something went wrong');
       }
     } catch (error) {
       console.error(error);
     }
   };
 
+  const isFormValid = email !== '' && password !== '' && firstName !== '' && phoneNumber !== '' && selectedRole !== '';
+
   return (
     <div className="modal modal-sheet d-flex align-items-center justify-content-center bg-opacity-20 backdrop-blur-sm">
       <div className="modal-dialog" ref={modalRef}>
-        <div className="modal-content rounded-4 shadow" style={{ width: "400px" }}>
+        <div className="modal-content rounded-4 shadow" style={{ width: '400px' }}>
           <div className="modal-header border-bottom-0">
             <h1 className="modal-title fs-5">Gebruiker toevoegen</h1>
             <button
@@ -132,20 +135,25 @@ export default function ModalUserAdd({
               <p>
                 <strong>Rol:</strong>
               </p>
-              <input
-                type="text"
-                value={role}
-                onChange={(event) => setRole(event.target.value)}
+              <select
+                value={selectedRole}
+                onChange={(event) => setSelectedRole(event.target.value)}
                 required
                 className="px-2 py-1 border rounded"
-              />
+              >
+                <option value="">Selecteer een rol</option>
+                <option value="Admin">Admin</option>
+                <option value="Moderator">Moderator</option>
+                <option value="Gebruiker">Gebruiker</option>
+              </select>
             </div>
           </div>
           <div className="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
             <button
               type="button"
-              className="btn btn-lg btn-warning"
+              className="btn btn-lg btn-color"
               onClick={handleAddUser}
+              disabled={!isFormValid}
             >
               Toevoegen
             </button>

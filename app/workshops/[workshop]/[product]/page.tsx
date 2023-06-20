@@ -5,6 +5,7 @@ import { useReactToPrint } from "react-to-print";
 import { useRouter } from "next/navigation";
 import BreadCrumbs from "@/components/BreadCrumbs";
 import "../../../../css/workshop.css";
+import "../../../../css/Color.css";
 import { updateQuantity } from "../../../../components/UpdateQuantity";
 import Barcode from "react-barcode";
 import Nav from "@/components/Nav";
@@ -95,7 +96,7 @@ export default function updateProduct({ params }: any) {
       <form onSubmit={create}>
       <div className="container text-center my-5" >
         <BreadCrumbs breadCrumbs={breadCrumbs} />
-        <h1 style={{ color: "orange" }}>Product</h1>
+        <h1 className="btn-color2">Product</h1>
         <div className="my-4 div-style">
 
           <h2>{product.Name}</h2>

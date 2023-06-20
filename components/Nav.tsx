@@ -2,74 +2,61 @@
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from 'react';
-import Dropdown from 'react-bootstrap/Dropdown';
-
-
-
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import "../css/Color.css"
 
 export default function Nav() {
   return (
-<header className="pt-3 pb-2 text-bg-dark border-bottom">
-  <div className="container">
-    <div className="d-flex flex-wrap flex-nowrap">
+<Navbar bg="white" expand="lg" className="navbar-divider sticky-top">
+      <div className="container">
+        <Navbar.Brand href="/">
+          <img src='https://cdn-bnege.nitrocdn.com/MVgfApSlnIZMEMtTrPfeVWWDRvGvEHus/assets/images/optimized/rev-aeea760/wp-content/uploads/2020/06/Skool-Workshop_Logo.png' alt="Skool Workshop Logo" className="logo-img" />
+        </Navbar.Brand>
 
-      <ul className="nav col-12 col-md-auto my-2 me-lg-auto justify-center md:justify-start my-md-0 text-small ps-0 space-x-4">
-        <li className="col-3">
-          <a href="/" className="nav-link text-white">
-            Dashboard
-          </a>
-        </li>
-        <li className="col-3">
-          <a href="/workshops" className="nav-link text-white">
-            Workshops
-          </a>
-        </li>
-        <li className="col-3">
-          <a href="/orders" className="nav-link text-white">
-            Bestellingen
-          </a>
-        </li>
-        <li className="col-3">
-          <a href="/scanner" className="nav-link text-white">
-            Scanner
-          </a>
-        </li>
-      </ul>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
+        <Navbar.Collapse id="basic-navbar-nav">
+          <ul className="navbar-nav me-auto">
+            <li className="nav-item">
+              <a href="/" className="nav-link text-black">
+                Dashboard
+              </a>
+            </li>
+            <li className="nav-item">
+              <a href="/workshops" className="nav-link text-black">
+                Workshops
+              </a>
+            </li>
+            <li className="nav-item">
+              <a href="/orders" className="nav-link text-black">
+                Bestellingen
+              </a>
+            </li>
+            <li className="nav-item">
+              <a href="/scanner" className="nav-link text-black">
+                Scanner
+              </a>
+            </li>
+          </ul>
 
-
-        <div className="dropdown text-end d-none d-lg-block">
-          {/* Display only on large screens */}
-          <Dropdown>
-            <Dropdown.Toggle
-              as="a"
-              href="#"
-              className="btn btn-warning dropdown-toggle"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              id="dropdown-basic"
-            >
-              Profiel
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu className="dropdown-menu text-small">
-              <Dropdown.Item href="/addProduct">Nieuw product</Dropdown.Item>
-              <Dropdown.Item href="#">Nieuw workshop</Dropdown.Item>
-              <Dropdown.Divider /> {/* Divider */}
-              <Dropdown.Item href="/persons">Gebruikers</Dropdown.Item>
-              <Dropdown.Item href="/profile">Profiel</Dropdown.Item>
-              <Dropdown.Divider /> {/* Divider */}
-              <Dropdown.Item href="/login">Uitloggen</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
-
-
+          <NavDropdown
+            title="Profiel"
+            id="basic-nav-dropdown"
+            className="btn btn-color"
+          >
+            <NavDropdown.Item href="/addProduct">
+              Nieuw product
+            </NavDropdown.Item>
+            <NavDropdown.Item href="#">Nieuw workshop</NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item href="/persons">Gebruikers</NavDropdown.Item>
+            <NavDropdown.Item href="/profile">Profiel</NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item href="/login">Uitloggen</NavDropdown.Item>
+          </NavDropdown>
+        </Navbar.Collapse>
       </div>
-    </div>
-  </header>
-
- 
+    </Navbar>
   );
 }
