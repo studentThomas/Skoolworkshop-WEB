@@ -31,7 +31,7 @@ async function getWorkshop(workshopId : string) {
     return workshop;
 }
 
-export async function updateQuantity(productId: string, quantity: number) {
+ async function updateQuantity(productId: string, quantity: number) {
   await fetch(`http://127.0.0.1:3000/api/stock/${productId}`, {
     method: 'PUT',
     headers: {
@@ -43,7 +43,7 @@ export async function updateQuantity(productId: string, quantity: number) {
   });
 }
 
-export async function updateStatus(orderWorkshopId: string) {
+ async function updateStatus(orderWorkshopId: string) {
   await fetch(`http://127.0.0.1:3000/api/order/${orderWorkshopId}`, {
     method: 'PUT',
     headers: {
