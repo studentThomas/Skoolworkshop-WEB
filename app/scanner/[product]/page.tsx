@@ -65,26 +65,24 @@ export default function updateProduct({ params }: any) {
   const router = useRouter();
 
   const create = async (event: React.FormEvent<HTMLFormElement>) => {
-    // Prevent the default behavior of the form
     event.preventDefault();
-
-    const newQuantity = quantity + product.Quantity;
-
+  
+    const newQuantity = product.Quantity + tempQuantity;
+  
     setProduct((prevProduct: any) => ({
       ...prevProduct,
       Quantity: newQuantity,
     }));
   
-    await updateQuantity(product.Id, quantity);
-
-    setQuantity(0);
+    // Assuming the updateQuantity function updates the quantity of the product
+    await updateQuantity(product.Id, newQuantity);
   
-    // Use a callback function with useState to ensure the updated state is correctly reflected
-    setNotification(() => "De voorraad is succesvol bijgewerkt tot " + newQuantity + " stuks.");
+    setQuantity(0);
+    setTempQuantity(0);
+    setNotification("De voorraad is succesvol bijgewerkt tot " + newQuantity + " stuks.");
   
     router.refresh();
   };
-  
 
   return (
     <div>
@@ -113,7 +111,7 @@ export default function updateProduct({ params }: any) {
               >
                 -
               </button>
-              <span>{tempQuantity}</span>
+              <span className="quantity-span">{tempQuantity}</span>
               <button
                 type="button"
                 onClick={handleIncrease}
