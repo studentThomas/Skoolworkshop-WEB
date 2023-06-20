@@ -10,7 +10,7 @@ import Nav from '@/components/Nav';
 
 
 async function getOrders() {
-    const response = await fetch("http://127.0.0.1:3000/api/order",
+    const response = await fetch("https://skoolworkshop.up.railway.app/api/order",
     { cache: "no-store" });
     const data = await response.json();
     const orders = data?.data as any[];
@@ -31,8 +31,8 @@ async function getWorkshop(workshopId : string) {
     return workshop;
 }
 
- async function updateQuantity(productId: string, quantity: number) {
-  await fetch(`http://127.0.0.1:3000/api/stock/${productId}`, {
+async function updateQuantity(productId: string, quantity: number) {
+  await fetch(`https://skoolworkshop.up.railway.app/api/stock/${productId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -43,8 +43,8 @@ async function getWorkshop(workshopId : string) {
   });
 }
 
- async function updateStatus(orderWorkshopId: string) {
-  await fetch(`http://127.0.0.1:3000/api/order/${orderWorkshopId}`, {
+async function updateStatus(orderWorkshopId: string) {
+  await fetch(`https://skoolworkshop.up.railway.app/api/order/${orderWorkshopId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
