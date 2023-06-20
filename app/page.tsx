@@ -1,7 +1,10 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "../../css/Color.css"
+import "../../css/Login.css"
+import { Alert } from 'react-bootstrap';
 
 async function login(email: any, password: any) {
   try {
@@ -36,11 +39,25 @@ async function login(email: any, password: any) {
   }
 }
 
-export default function LoginPage() {
+function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
+
+  useEffect(() => {
+    const storedRememberMe = localStorage.getItem('rememberMe');
+    const storedEmail = localStorage.getItem('email');
+  
+    if (storedRememberMe === 'true') {
+      setRememberMe(true);
+      if (storedEmail !== null) {
+        setEmail(storedEmail);
+      }
+    }
+  }, []);
+  
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -51,6 +68,14 @@ export default function LoginPage() {
     try {
       const response = await login(email, password);
       if (response?.status === 200) {
+        if (rememberMe) {
+          localStorage.setItem('rememberMe', 'true');
+          localStorage.setItem('email', email);
+        } else {
+          localStorage.removeItem('rememberMe');
+          localStorage.removeItem('email');
+        }
+
         router.push('/workshops');
       } else {
         setError('Invalid email or password');
@@ -62,47 +87,69 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="d-flex align-items-center justify-content-center py-4">
-      <form>
-        <h1 className="h3 mb-3 fw-bold">Login</h1>
-
-        <div className="form-floating">
-          <input
-            type="email"
-            className="form-control"
-            id="floatingInput"
-            placeholder="name@example.com"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <label>Email address</label>
+    <div className="container d-flex justify-content-center align-items-center vh-100">
+      <div className="row">
+        <div className="col-12 text-center">
+          <div className="logo">
+            <img src="https://cdn-bnege.nitrocdn.com/MVgfApSlnIZMEMtTrPfeVWWDRvGvEHus/assets/images/optimized/rev-aeea760/wp-content/uploads/2020/06/Skool-Workshop_Logo.png" alt="Logo" />
+          </div>
         </div>
-        <div className="form-floating">
-          <input
-            type="password"
-            className="form-control"
-            id="floatingPassword"
-            placeholder="Password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <label>Password</label>
+        <div className="col-12">
+          <div className="login-card bg-white rounded shadow p-4">
+            <h2 className="mb-4">Login</h2>
+            {error && <Alert variant="danger">{error}</Alert>}
+            <form>
+              <div className="mb-3">
+                <label htmlFor="email" className="form-label font-weight-bold">
+                  Email:
+                </label>
+                <input
+                  type="email"
+                  className="form-control"
+                  id="email"
+                  name="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="password" className="form-label font-weight-bold">
+                  Wactwoord:
+                </label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="password"
+                  name="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <div className="mb-3 form-check">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="rememberMe"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                />
+                <label className="form-check-label" htmlFor="rememberMe">
+                  Onthouden
+                </label>
+              </div>
+              <div className="text-center">
+                <button className="btn w-100 btn-color" type="button" onClick={handleLogin}>
+                  Login
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-
-        <div className="form-check text-start my-3">
-          <input className="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault" />
-          <label className="form-check-label">Remember me</label>
-        </div>
-        <button className="btn btn-warning w-100 py-2" type="button" onClick={handleLogin}>
-          Login
-        </button>
-
-        {error && <p className="text-danger mt-3">{error}</p>}
-
-        <p className="mt-5 mb-3 text-body-secondary">&copy; Skoolworkshop 2023</p>
-      </form>
+      </div>
     </div>
   );
 }
+
+export default LoginPage;
