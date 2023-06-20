@@ -3,7 +3,7 @@
 import { log } from 'console';
 import Link from 'next/link';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from 'react';
 import "../globals.css";
 import Nav from '@/components/Nav';
