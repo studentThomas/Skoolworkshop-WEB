@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import "../css/Colors.css";
 
 export default function ModalProductUpdate({
   isVisible,
@@ -93,7 +94,7 @@ export default function ModalProductUpdate({
         Code: code,
         Image: image,
         Reusable: reusable,
-        MinStock: minStock,
+        minStock: minStock,
       };
       updateProduct(updatedProduct);
       onClose();
@@ -186,7 +187,7 @@ export default function ModalProductUpdate({
               <input
                 type="number"
                 value={minStock}
-                onChange={(event) => setMinStock(Number(event.target.value))}
+                onChange={(event) => setMinStock(event.target.value)}
                 required
                 className="px-2 py-1 border rounded"
               />
@@ -212,7 +213,7 @@ export default function ModalProductUpdate({
           <div className="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
             <button
               type="button"
-              className="btn btn-lg btn-warning"
+              className="btn btn-lg btn-color"
               onClick={handleUpdateProduct}
             >
               Opslaan

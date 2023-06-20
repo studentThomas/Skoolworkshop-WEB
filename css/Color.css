@@ -1,0 +1,32 @@
+.btn-color,
+.btn-color:hover,
+.btn-color:focus,
+.btn-color:active {
+  background-color: #f49702;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: #f49702; /* Replace with your desired background color */
+  color: white; /* Replace with your desired text color */
+}
+
+
+.btn-color2 {
+    color:#f49702;
+}
+
+.navbar-divider {
+    border-bottom: 1px solid black;
+}
+
+::selection {
+    background-color: #f49702;
+  }
+  
+
+.logo-img {
+  width: 150px;
+}
+  
+  

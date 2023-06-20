@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import "../css/Color.css";
 
 export default function ModalWorkshopUpdate({
   isVisible,
@@ -117,7 +118,7 @@ export default function ModalWorkshopUpdate({
           <div className="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
             <button
               type="button"
-              className="btn btn-lg btn-warning"
+              className="btn btn-lg btn-color"
               onClick={handleUpdateWorkshop}
             >
               Opslaan

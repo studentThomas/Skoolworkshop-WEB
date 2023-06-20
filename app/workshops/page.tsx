@@ -7,6 +7,7 @@ import Link from "next/link";
 import ModalWorkshopDelete from "../../components/ModalWorkshopDelete";
 import ModalWorkshopUpdate from "../../components/ModalWorkshopUpdate";
 import "../../css/workshop.css";
+import "../../css/Color.css"
 import { useRouter } from "next/navigation";
 
 async function getWorkshops() {
@@ -176,7 +177,7 @@ function WorkshopCard({ workshop, updateWorkshop, deleteWorkshop }: any) {
                 width="20"
                 height="20"
                 fill="currentColor"
-                className="bi bi-pencil text-warning"
+                className="bi bi-pencil btn-color2"
                 viewBox="0 0 16 16"
                 onClick={() =>
                   setShowModalProduct(true)

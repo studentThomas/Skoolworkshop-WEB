@@ -4,6 +4,7 @@ import Link from "next/link";
 import BreadCrumbs from "../../../components/BreadCrumbs";
 import ModalProductDelete from "../../../components/ModalProductDelete";
 import "../../../css/workshop.css";
+import "../../../css/Colors.css";
 import ModalProductUpdate from "@/components/ModalProductUpdate";
 import Nav from "@/components/Nav";
 
@@ -57,6 +58,22 @@ export default function ProductsPage({ params }: any) {
   const [products, setProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
+  const [workshopName, setWorkshopName] = useState("");
+
+  useEffect(() => {
+    async function fetchWorkshopDetails() {
+      try {
+        const response = await fetch(`https://skoolworkshop.up.railway.app/api/workshop/${params.workshop}`, { cache: "no-store" });
+        const data = await response.json();
+        const workshopName = data?.data?.Name || "";
+        setWorkshopName(workshopName);
+      } catch (error) {
+        console.error("Error fetching workshop details:", error);
+      }
+    }
+
+    fetchWorkshopDetails();
+  }, [params.workshop]);
 
   localStorage.setItem("role", "admin");
   const role = localStorage.getItem("role");
@@ -64,7 +81,7 @@ export default function ProductsPage({ params }: any) {
   const breadCrumbs = [
     { name: "Dashboard", url: "/" },
     { name: "Workshops", url: "/workshops" },
-    { name: "Workshop", url: `/workshops/${params.workshop}` },
+    { name: workshopName, url: `/workshops/${params.workshop}` },
   ];
 
   useEffect(() => {
@@ -189,13 +206,12 @@ function Product({ product, params, deleteProduct, updateProduct }: any) {
   const {
     Id,
     Name,
-    CategoryId,
     Description,
     Code,
     Quantity,
     Image,
     Reusable,
-    MinStock,
+    minStock,
   } = product;
   const workshopId = params.workshop;
   const [showModal, setShowModal] = useState(false);
@@ -219,7 +235,7 @@ function Product({ product, params, deleteProduct, updateProduct }: any) {
         code={Code}
         image={Image}
         reusable={Reusable}
-        minStock={MinStock}
+        minStock={minStock}
         productId={Id}
         updateProduct={updateProduct}
       />
@@ -244,7 +260,7 @@ function Product({ product, params, deleteProduct, updateProduct }: any) {
               width="20"
               height="20"
               fill="currentColor"
-              className="bi bi-pencil text-warning"
+              className="bi bi-pencil btn-color2"
               viewBox="0 0 16 16"
               onClick={() => setShowModalUpdate(true)}
             >
