@@ -3,14 +3,14 @@
 import { log } from 'console';
 import Link from 'next/link';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from 'react';
 import "../globals.css";
 import Nav from '@/components/Nav';
 
 
 async function getOrders() {
-    const response = await fetch("http://127.0.0.1:3000/api/order",
+    const response = await fetch("https://skoolworkshop.up.railway.app/api/order",
     { cache: "no-store" });
     const data = await response.json();
     const orders = data?.data as any[];
@@ -31,8 +31,8 @@ async function getWorkshop(workshopId : string) {
     return workshop;
 }
 
-export async function updateQuantity(productId: string, quantity: number) {
-  await fetch(`http://127.0.0.1:3000/api/stock/${productId}`, {
+async function updateQuantity(productId: string, quantity: number) {
+  await fetch(`https://skoolworkshop.up.railway.app/api/stock/${productId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -43,8 +43,8 @@ export async function updateQuantity(productId: string, quantity: number) {
   });
 }
 
-export async function updateStatus(orderWorkshopId: string) {
-  await fetch(`http://127.0.0.1:3000/api/order/${orderWorkshopId}`, {
+async function updateStatus(orderWorkshopId: string) {
+  await fetch(`https://skoolworkshop.up.railway.app/api/order/${orderWorkshopId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -154,10 +154,4 @@ async function ProductItem({ product, workshopId }: { product: any, workshopId: 
 
             );
     }
-  
-  
-  
-
-
-
   
