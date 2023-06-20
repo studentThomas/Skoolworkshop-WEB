@@ -31,26 +31,26 @@ async function getWorkshop(workshopId : string) {
     return workshop;
 }
 
-async function updateQuantity(productId: string, quantity: number) {
-  await fetch(`https://skoolworkshop.up.railway.app/api/stock/${productId}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      quantity: -quantity
-    }),
-  });
-}
+// async function updateQuantity(productId: string, quantity: number) {
+//   await fetch(`https://skoolworkshop.up.railway.app/api/stock/${productId}`, {
+//     method: 'PUT',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({
+//       quantity: -quantity
+//     }),
+//   });
+// }
 
-async function updateStatus(orderWorkshopId: string) {
-  await fetch(`https://skoolworkshop.up.railway.app/api/order/${orderWorkshopId}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-}
+// async function updateStatus(orderWorkshopId: string) {
+//   await fetch(`https://skoolworkshop.up.railway.app/api/order/${orderWorkshopId}`, {
+//     method: 'PUT',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   });
+// }
 
 
 
@@ -78,8 +78,8 @@ export default async function OrdersPage() {
           for (const product of order.products) {
             const productId = product.ProductId;
             const quantity = product.Quantity;
-            await updateStatus(order.OrderWorkshopId);
-            await updateQuantity(productId, quantity);
+            // await updateStatus(order.OrderWorkshopId);
+            // await updateQuantity(productId, quantity);
         
           }
         }
