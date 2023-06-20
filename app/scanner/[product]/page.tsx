@@ -70,7 +70,7 @@ export default function updateProduct({ params }: any) {
     const newQuantity = product.Quantity + tempQuantity;
   
     setProduct((prevProduct: any) => ({
-      ...prevProduct,
+      ...prevProduct, 
       Quantity: newQuantity,
     }));
   
