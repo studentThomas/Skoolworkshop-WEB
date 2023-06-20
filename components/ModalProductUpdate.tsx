@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "../css/Color.css";
+import "../css/Colors.css";
 
 export default function ModalProductUpdate({
   isVisible,
@@ -94,7 +94,7 @@ export default function ModalProductUpdate({
         Code: code,
         Image: image,
         Reusable: reusable,
-        MinStock: minStock,
+        minStock: minStock,
       };
       updateProduct(updatedProduct);
       onClose();
@@ -187,7 +187,7 @@ export default function ModalProductUpdate({
               <input
                 type="number"
                 value={minStock}
-                onChange={(event) => setMinStock(Number(event.target.value))}
+                onChange={(event) => setMinStock(event.target.value)}
                 required
                 className="px-2 py-1 border rounded"
               />
