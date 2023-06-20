@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "../../css/Color.css"
-import "../../css/Login.css"
+import "../css/Color.css"
+import "../css/Login.css"
 import { Alert } from 'react-bootstrap';
 
 async function login(email: any, password: any) {
