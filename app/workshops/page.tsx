@@ -19,10 +19,6 @@ async function getWorkshops() {
   return workshops;
 }
 
-const breadCrumbs = [
-  { name: "Dashboard", url: "/" },
-  { name: "Workshops", url: "/workshops" },
-];
 
 export default  function WorkshopsPage() {
   const [workshops, setWorkshops] = useState<any[]>([]);
@@ -103,8 +99,8 @@ export default  function WorkshopsPage() {
   return (
     <div>
       <Nav />
+      <div style={{ marginTop:15}}/>
     <div className="">
-      <BreadCrumbs breadCrumbs={breadCrumbs} />
       <div className="album ">
         <div className="container">
           <header className="mb-4">

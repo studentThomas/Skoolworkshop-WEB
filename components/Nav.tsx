@@ -10,7 +10,7 @@ export default function Nav() {
   return (
 <Navbar bg="white" expand="lg" className="navbar-divider sticky-top">
       <div className="container">
-        <Navbar.Brand href="/">
+        <Navbar.Brand href="/workshops">
           <img src='https://cdn-bnege.nitrocdn.com/MVgfApSlnIZMEMtTrPfeVWWDRvGvEHus/assets/images/optimized/rev-aeea760/wp-content/uploads/2020/06/Skool-Workshop_Logo.png' alt="Skool Workshop Logo" className="logo-img" />
         </Navbar.Brand>
 
@@ -20,7 +20,7 @@ export default function Nav() {
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
               <a href="/dashboard" className="nav-link text-black">
-                Dashboard
+                Notificaties
               </a>
             </li>
             <li className="nav-item">

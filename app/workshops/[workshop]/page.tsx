@@ -76,7 +76,6 @@ export default function ProductsPage({ params }: any) {
   }, [params.workshop]);
 
   const breadCrumbs = [
-    { name: "Dashboard", url: "/" },
     { name: "Workshops", url: "/workshops" },
     { name: workshopName, url: `/workshops/${params.workshop}` },
   ];
