@@ -2,6 +2,7 @@
 import '../../css/notification.css'
 
 import React, { useState, useEffect } from 'react';
+import Nav from '@/components/Nav';
 
 async function getNotifications() {
   try {
@@ -30,7 +31,9 @@ export default function NotificationPage() {
   }, []);
 
   return (
-    <div className="container text-center my-5">
+    <div>
+      <Nav />
+      <div className="container text-center my-5">
       <h1>Notificaties</h1>
       {notifications.length === 0 ? (
         <p>Er zijn geen notificaties.</p>
@@ -44,6 +47,8 @@ export default function NotificationPage() {
         ))
       )}
     </div>
+    </div>
+
   );
   
 }

@@ -103,7 +103,6 @@ export default  function WorkshopsPage() {
   return (
     <div>
       <Nav />
-      <h1 className="text-center">{role}</h1>
     <div className="">
       <BreadCrumbs breadCrumbs={breadCrumbs} />
       <div className="album ">
