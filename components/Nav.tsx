@@ -19,7 +19,7 @@ export default function Nav() {
         <Navbar.Collapse id="basic-navbar-nav">
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <a href="/" className="nav-link text-black">
+              <a href="/dashboard" className="nav-link text-black">
                 Dashboard
               </a>
             </li>
