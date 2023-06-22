@@ -76,7 +76,7 @@ function LoginPage() {
           localStorage.removeItem('email');
         }
 
-        router.push('/workshops');
+        router.push('/dashboard');
       } else {
         setError('Invalid email or password');
       }
