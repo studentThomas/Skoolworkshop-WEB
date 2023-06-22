@@ -75,15 +75,10 @@ export default function updateProduct({
   }, [params.product]);
 
   const breadCrumbs = [
-    { name: 'Dashboard', url: '/' },
-    { name: 'Workshops', url: '/workshops' },
-    {
-      name: workshopName,
-      url: `/workshops/${params.workshop}`
-    },
+    { name: 'Scanner', url: '/Scanner' },
     {
       name: productName,
-      url: `/workshops/${params.workshop}/${params.product}`
+      url: `/Scanner/${params.product}`
     }
   ];
 
