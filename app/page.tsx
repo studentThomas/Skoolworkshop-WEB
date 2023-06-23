@@ -115,7 +115,7 @@ function LoginPage() {
               </div>
               <div className="mb-3">
                 <label htmlFor="password" className="form-label font-weight-bold">
-                  Wactwoord:
+                  Wachtwoord:
                 </label>
                 <input
                   type="password"
